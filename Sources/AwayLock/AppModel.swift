@@ -13,6 +13,8 @@ struct StatusInfo {
 /// Une el motor de presencia, el Bluetooth y la pantalla, y expone el estado a la interfaz.
 @MainActor
 final class AppModel: ObservableObject, ProximityScannerDelegate {
+    static let shared = AppModel()
+
     private let prefs: Preferences
     private let engine = PresenceEngine()
     private let scanner: ProximityScanner
@@ -21,13 +23,17 @@ final class AppModel: ObservableObject, ProximityScannerDelegate {
     /// Lista de dispositivos de ejemplo para las capturas.
     private var previewDevices: [NearbyDevice]?
 
-    /// Avanza una vez por segundo; publicarlo hace que la interfaz se redibuje.
-    @Published private(set) var now = Date()
+    /// Avanza una vez por segundo. No es @Published: redibujar cada segundo con todo
+    /// cerrado gastaba CPU de más. `tick()` avisa a la interfaz solo cuando hace falta.
+    private(set) var now = Date()
+    /// Cuántas vistas (panel, ventana) se están mostrando ahora.
+    private var visibleViews = 0
+    private var lastMenuBarSymbol = ""
     @Published var hint: String?
     @Published var showAllDevices = false
-    /// La lista de dispositivos solo escanea mientras está abierta.
-    @Published var deviceListOpen = false {
-        didSet { scanner.discovering = deviceListOpen }
+    /// La lista de dispositivos solo escanea mientras se está mostrando.
+    var isListingDevices = false {
+        didSet { scanner.discovering = isListingDevices }
     }
 
     private var lastAutoLock: Date?
@@ -78,6 +84,23 @@ final class AppModel: ObservableObject, ProximityScannerDelegate {
             prefs.deviceName = name
         }
         self.now = now
+
+        // Con el panel o la ventana a la vista, refrescamos cada segundo (medidor, cuenta
+        // regresiva). Con todo cerrado, solo cuando cambia el ícono de la barra de menú.
+        let symbol = menuBarSymbol
+        if visibleViews > 0 || symbol != lastMenuBarSymbol {
+            lastMenuBarSymbol = symbol
+            objectWillChange.send()
+        }
+    }
+
+    func viewAppeared() {
+        visibleViews += 1
+        objectWillChange.send()
+    }
+
+    func viewDisappeared() {
+        visibleViews = max(0, visibleViews - 1)
     }
 
     private func handle(_ events: [PresenceEvent]) {
@@ -256,6 +279,12 @@ final class AppModel: ObservableObject, ProximityScannerDelegate {
         hint = nil
     }
 
+    private lazy var mainWindow = MainWindowController(model: self)
+
+    func openMainWindow() {
+        mainWindow.show()
+    }
+
     func lockNow() {
         ScreenControl.lock()
     }
@@ -302,7 +331,6 @@ extension AppModel {
                 NearbyDevice(id: deviceID, name: "iPhone de Luca", isApple: true, rssi: -46, lastSeen: now),
                 NearbyDevice(id: UUID(), name: "iPhone del trabajo", isApple: true, rssi: -71, lastSeen: now),
             ]
-            model.deviceListOpen = true
         }
         return model
     }

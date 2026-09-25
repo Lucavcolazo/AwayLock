@@ -11,17 +11,20 @@ enum Snapshots {
         NSApp.setActivationPolicy(.prohibited)
         try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
 
+        // Para que el encabezado de la ventana muestre el ícono real.
+        if let icon = NSImage(contentsOfFile: "Resources/AppIcon.icns") {
+            NSApp.applicationIconImage = icon
+        }
+
         let shots: [(String, AnyView)] = [
-            ("estados.png", AnyView(Showcase(panels: [
-                .init(caption: "Estás en la compu", model: .preview(.near)),
-                .init(caption: "Te levantás y te vas", model: .preview(.leaving)),
-                .init(caption: "La Mac queda bloqueada", model: .preview(.away)),
+            ("estados.png", AnyView(Showcase(items: [
+                .init(caption: "Estás en la compu", content: AnyView(FramedPanel(model: .preview(.near)))),
+                .init(caption: "Te levantás y te vas", content: AnyView(FramedPanel(model: .preview(.leaving)))),
+                .init(caption: "La Mac queda bloqueada", content: AnyView(FramedPanel(model: .preview(.away)))),
             ]))),
-            ("dispositivo.png", AnyView(Showcase(panels: [
-                .init(caption: "Elegís tu iPhone", model: .preview(.near, devices: true)),
-            ]))),
-            ("ajustes.png", AnyView(Showcase(panels: [
-                .init(caption: "Lo ajustás a tu escritorio", model: .preview(.near), settingsExpanded: true),
+            ("ventana.png", AnyView(Showcase(items: [
+                .init(caption: "Tu iPhone y los ajustes, en su propia ventana",
+                      content: AnyView(FramedWindow(model: .preview(.near, devices: true)))),
             ]))),
         ]
         for (name, view) in shots {
@@ -53,23 +56,21 @@ enum Snapshots {
     }
 }
 
-private struct ShowcasePanel {
+private struct ShowcaseItem {
     let caption: String
-    let model: AppModel
-    var settingsExpanded = false
+    let content: AnyView
 }
 
-/// Paneles sobre un fondo de color, con una leyenda abajo de cada uno.
+/// Capturas sobre un fondo de color, con una leyenda abajo de cada una.
 private struct Showcase: View {
-    let panels: [ShowcasePanel]
+    let items: [ShowcaseItem]
 
     var body: some View {
         HStack(alignment: .top, spacing: 32) {
-            ForEach(panels.indices, id: \.self) { index in
-                let panel = panels[index]
+            ForEach(items.indices, id: \.self) { index in
                 VStack(spacing: 18) {
-                    FramedPanel(model: panel.model, settingsExpanded: panel.settingsExpanded)
-                    Text(panel.caption)
+                    items[index].content
+                    Text(items[index].caption)
                         .font(.system(size: 15, weight: .semibold, design: .rounded))
                         .foregroundStyle(.white.opacity(0.9))
                 }
@@ -94,10 +95,9 @@ private struct Showcase: View {
 /// El panel con el fondo y el borde que le da la barra de menú.
 private struct FramedPanel: View {
     @ObservedObject var model: AppModel
-    let settingsExpanded: Bool
 
     var body: some View {
-        PanelView(settingsExpandedOverride: settingsExpanded)
+        PanelView()
             .environmentObject(model)
             .background(
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
@@ -108,6 +108,40 @@ private struct FramedPanel: View {
                     .strokeBorder(Color.white.opacity(0.12))
             )
             .shadow(color: .black.opacity(0.35), radius: 24, y: 12)
+    }
+}
+
+/// La ventana principal con una barra de título dibujada (la real no se captura).
+private struct FramedWindow: View {
+    @ObservedObject var model: AppModel
+
+    var body: some View {
+        VStack(spacing: 0) {
+            ZStack {
+                HStack(spacing: 8) {
+                    Circle().fill(Color(red: 1.0, green: 0.37, blue: 0.34))
+                    Circle().fill(Color(red: 1.0, green: 0.74, blue: 0.18))
+                    Circle().fill(Color(red: 0.16, green: 0.79, blue: 0.25))
+                    Spacer()
+                }
+                .frame(height: 12)
+                .padding(.leading, 14)
+                Text("AwayLock")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.secondary)
+            }
+            .frame(height: 30)
+            .background(Color(white: 0.19))
+
+            MainWindowView(height: 1030)
+                .environmentObject(model)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .strokeBorder(Color.white.opacity(0.12))
+        )
+        .shadow(color: .black.opacity(0.4), radius: 28, y: 14)
     }
 }
 #endif

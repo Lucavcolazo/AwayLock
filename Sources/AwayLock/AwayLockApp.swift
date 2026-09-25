@@ -18,7 +18,8 @@ enum Main {
 }
 
 struct AwayLockApp: App {
-    @StateObject private var model = AppModel()
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    @StateObject private var model = AppModel.shared
 
     var body: some Scene {
         MenuBarExtra {
@@ -29,5 +30,20 @@ struct AwayLockApp: App {
         }
         // Panel tipo Centro de Control en vez de un menú de texto.
         .menuBarExtraStyle(.window)
+    }
+}
+
+final class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        // La primera vez, sin iPhone elegido, mostramos la ventana para configurarlo.
+        if AppModel.shared.selectedID == nil {
+            AppModel.shared.openMainWindow()
+        }
+    }
+
+    /// Abrir la app desde el Finder, Launchpad o el Dock mientras ya está corriendo.
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        AppModel.shared.openMainWindow()
+        return false
     }
 }
