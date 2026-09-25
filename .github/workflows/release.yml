@@ -1,0 +1,38 @@
+# Al subir un tag vX.Y.Z: corre los tests, arma el .zip y publica el Release en GitHub.
+# El tag tiene que coincidir con CFBundleShortVersionString de Resources/Info.plist.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verificar que el tag coincide con la versión
+        run: |
+          VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" Resources/Info.plist)
+          if [ "$GITHUB_REF_NAME" != "v$VERSION" ]; then
+            echo "El tag es $GITHUB_REF_NAME pero Info.plist dice $VERSION"
+            exit 1
+          fi
+
+      - name: Tests
+        run: swift test
+
+      - name: Armar el .zip
+        run: ./scripts/release.sh
+
+      - name: Publicar el Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/*.zip \
+            --title "AwayLock $GITHUB_REF_NAME" \
+            --notes-file .github/release-notes.md

@@ -41,6 +41,15 @@ final class ProximityScanner: NSObject {
     private(set) var connectedName: String?
     var bluetoothOn: Bool { central?.state == .poweredOn }
 
+    /// El usuario rechazó el acceso a Bluetooth (o una política de la Mac lo bloquea).
+    var permissionDenied: Bool {
+        guard central != nil else { return false }
+        switch CBCentralManager.authorization {
+        case .denied, .restricted: return true
+        default: return false
+        }
+    }
+
     /// Queda en nil si se crea sin Bluetooth; todo lo que lo usa pasa antes por `bluetoothOn`.
     private var central: CBCentralManager!
     private var target: CBPeripheral?

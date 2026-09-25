@@ -7,7 +7,7 @@ cd "$(dirname "$0")"
 
 pkill -x AwayLock 2>/dev/null && sleep 1 || true
 rm -rf /Applications/AwayLock.app
-cp -R build/AwayLock.app /Applications/
+ditto --norsrc --noextattr build/AwayLock.app /Applications/AwayLock.app
 open /Applications/AwayLock.app
 
 echo "Instalado en /Applications/AwayLock.app"

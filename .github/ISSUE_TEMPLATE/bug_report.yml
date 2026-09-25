@@ -1,0 +1,47 @@
+name: Reportar un problema / Bug report
+description: Algo no funciona como esperabas. / Something isn't working.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: ¿Qué pasó? / What happened?
+      description: Contá qué esperabas y qué pasó en realidad. / What did you expect, and what happened instead?
+    validations:
+      required: true
+
+  - type: input
+    id: mac
+    attributes:
+      label: Mac y versión de macOS / Mac and macOS version
+      placeholder: "MacBook Air M2, macOS 15.3"
+    validations:
+      required: true
+
+  - type: input
+    id: phone
+    attributes:
+      label: iPhone y versión de iOS / iPhone and iOS version
+      placeholder: "iPhone 15, iOS 18.2"
+
+  - type: input
+    id: signal
+    attributes:
+      label: Señal sentado frente a la Mac / Signal while sitting at the Mac
+      description: El valor en dBm que muestra el panel. / The dBm value shown in the panel.
+      placeholder: "-55 dBm"
+
+  - type: input
+    id: settings
+    attributes:
+      label: Ajustes de distancia / Distance settings
+      description: Los valores de "Bloquear con señal menor a" y "Volviste con señal mayor a".
+      placeholder: "-75 / -60"
+
+  - type: dropdown
+    id: watch
+    attributes:
+      label: ¿Usás Apple Watch para desbloquear? / Do you unlock with an Apple Watch?
+      options:
+        - "Sí / Yes"
+        - "No"

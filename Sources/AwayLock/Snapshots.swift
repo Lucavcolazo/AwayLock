@@ -16,7 +16,13 @@ enum Snapshots {
             NSApp.applicationIconImage = icon
         }
 
-        let shots: [(String, AnyView)] = [
+        // Sin bundle, la versión sale del Info.plist del repo.
+        if let info = NSDictionary(contentsOfFile: "Resources/Info.plist"),
+           let version = info["CFBundleShortVersionString"] as? String {
+            AppModel.version = version
+        }
+
+        var shots: [(String, AnyView)] = [
             ("estados.png", AnyView(Showcase(items: [
                 .init(caption: "Estás en la compu", content: AnyView(FramedPanel(model: .preview(.near)))),
                 .init(caption: "Te levantás y te vas", content: AnyView(FramedPanel(model: .preview(.leaving)))),
@@ -27,6 +33,14 @@ enum Snapshots {
                       content: AnyView(FramedWindow(model: .preview(.near, devices: true)))),
             ]))),
         ]
+        // `--extra` agrega capturas de estados poco comunes, para revisarlos (no van al README).
+        if CommandLine.arguments.contains("--extra") {
+            shots.append(("extra-permiso.png", AnyView(Showcase(items: [
+                .init(caption: "Sin permiso de Bluetooth",
+                      content: AnyView(FramedPanel(model: .preview(.near, permissionDenied: true)))),
+            ]))))
+        }
+
         for (name, view) in shots {
             let url = folder.appendingPathComponent(name)
             if write(view, to: url) {

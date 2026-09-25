@@ -48,6 +48,9 @@ struct MainWindowView: View {
             Section {
                 AppHeader()
                 StatusCard(framed: false)
+                if model.needsBluetoothPermission {
+                    PermissionBanner { model.openBluetoothSettings() }
+                }
                 if let hint = model.hint {
                     HintBanner(text: hint) { model.hint = nil }
                 }

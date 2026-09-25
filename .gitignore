@@ -1,3 +1,5 @@
 .build/
 build/
+dist/
+docs/extra-*.png
 .DS_Store

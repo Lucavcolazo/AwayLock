@@ -14,6 +14,8 @@ struct StatusInfo {
 @MainActor
 final class AppModel: ObservableObject, ProximityScannerDelegate {
     static let shared = AppModel()
+    /// Sale del Info.plist, así la versión se cambia en un solo lugar.
+    static var version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "dev"
 
     private let prefs: Preferences
     private let engine = PresenceEngine()
@@ -22,6 +24,7 @@ final class AppModel: ObservableObject, ProximityScannerDelegate {
     private let isPreview: Bool
     /// Lista de dispositivos de ejemplo para las capturas.
     private var previewDevices: [NearbyDevice]?
+    private var previewPermissionDenied = false
 
     /// Avanza una vez por segundo. No es @Published: redibujar cada segundo con todo
     /// cerrado gastaba CPU de más. `tick()` avisa a la interfaz solo cuando hace falta.
@@ -149,11 +152,24 @@ final class AppModel: ObservableObject, ProximityScannerDelegate {
     // MARK: - Estado visible
 
     private var bluetoothOn: Bool { isPreview || scanner.bluetoothOn }
+
+    var needsBluetoothPermission: Bool {
+        isPreview ? previewPermissionDenied : scanner.permissionDenied
+    }
+
+    func openBluetoothSettings() {
+        let url = "x-apple.systempreferences:com.apple.preference.security?Privacy_Bluetooth"
+        if let url = URL(string: url) { NSWorkspace.shared.open(url) }
+    }
     private var nearbyDevices: [NearbyDevice] { previewDevices ?? scanner.nearbyDevices() }
 
-    var rssi: Int? { engine.isLost(at: now) ? nil : engine.smoothedRSSI }
+    var rssi: Int? {
+        guard !needsBluetoothPermission, !engine.isLost(at: now) else { return nil }
+        return engine.smoothedRSSI
+    }
 
     var menuBarSymbol: String {
+        guard !needsBluetoothPermission else { return "exclamationmark.triangle" }
         guard prefs.enabled else { return "pause.circle" }
         guard prefs.deviceID != nil, bluetoothOn else { return "iphone.slash" }
         switch engine.state {
@@ -166,6 +182,10 @@ final class AppModel: ObservableObject, ProximityScannerDelegate {
     var status: StatusInfo {
         let signal = rssi.map { "\($0) dBm" } ?? "sin lectura"
         let device = prefs.deviceName ?? "Tu iPhone"
+        guard !needsBluetoothPermission else {
+            return StatusInfo(title: "Sin permiso de Bluetooth", detail: "Activalo en Ajustes",
+                              symbol: "hand.raised.fill", tint: .orange)
+        }
         guard prefs.deviceID != nil else {
             return StatusInfo(title: "Elegí tu iPhone", detail: "Abrí «Dispositivo» y acercalo a la Mac",
                               symbol: "iphone.slash", tint: .gray)
@@ -300,8 +320,9 @@ enum PreviewScene {
 extension AppModel {
     /// Modelo con datos de ejemplo para dibujar el panel en las capturas del README.
     /// Alimenta el motor real con lecturas inventadas, así el estado sale igual que en la app.
-    static func preview(_ scene: PreviewScene, devices: Bool = false) -> AppModel {
+    static func preview(_ scene: PreviewScene, devices: Bool = false, permissionDenied: Bool = false) -> AppModel {
         let model = AppModel(preview: true)
+        model.previewPermissionDenied = permissionDenied
         let deviceID = UUID()
         model.prefs.deviceID = deviceID
         model.prefs.deviceName = "iPhone de Luca"

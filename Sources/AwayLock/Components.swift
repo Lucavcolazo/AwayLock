@@ -103,6 +103,28 @@ struct SignalMeter: View {
     }
 }
 
+/// Aparece cuando macOS no le dio permiso de Bluetooth a la app.
+struct PermissionBanner: View {
+    let openSettings: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "hand.raised.fill")
+                    .foregroundStyle(.orange)
+                Text("Para medir la señal de tu iPhone, AwayLock necesita acceso a Bluetooth.")
+                    .font(.caption)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Button("Abrir Ajustes", action: openSettings)
+                .controlSize(.small)
+        }
+        .padding(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color.orange.opacity(0.15)))
+    }
+}
+
 struct HintBanner: View {
     let text: String
     let dismiss: () -> Void

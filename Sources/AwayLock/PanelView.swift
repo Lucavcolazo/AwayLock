@@ -9,6 +9,10 @@ struct PanelView: View {
         VStack(alignment: .leading, spacing: 12) {
             StatusCard()
 
+            if model.needsBluetoothPermission {
+                PermissionBanner { model.openBluetoothSettings() }
+            }
+
             if let hint = model.hint {
                 HintBanner(text: hint) { model.hint = nil }
                     .transition(.opacity.combined(with: .move(edge: .top)))
@@ -38,7 +42,7 @@ struct PanelView: View {
 
             HStack {
                 Text("AwayLock").font(.caption.weight(.medium))
-                Text("0.1").font(.caption).foregroundStyle(.tertiary)
+                Text(AppModel.version).font(.caption).foregroundStyle(.tertiary)
                 Spacer()
                 Button("Salir") { NSApp.terminate(nil) }
                     .keyboardShortcut("q")
