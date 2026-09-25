@@ -36,7 +36,7 @@ AwayLock only **locks**. It never stores your password or asks for Accessibility
 > [!IMPORTANT]
 > **macOS will block it the first time.** AwayLock isn't signed with a paid Apple Developer account, so macOS says it can't verify it. To open it:
 >
-> 1. Try to open AwayLock and dismiss the warning (don't move it to the Trash).
+> 1. Try to open AwayLock. In the warning, click **Done**, not "Move to Trash".
 > 2. Go to **System Settings → Privacy & Security**.
 > 3. Scroll down to the message about AwayLock and click **Open Anyway**.
 >

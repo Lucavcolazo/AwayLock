@@ -34,7 +34,7 @@ AwayLock solo **bloquea**. No guarda tu contraseña ni pide permisos de Accesibi
 > [!IMPORTANT]
 > **La primera vez macOS la va a bloquear.** AwayLock no está firmada con una cuenta paga de desarrollador de Apple, así que macOS avisa que no puede verificarla. Para abrirla:
 >
-> 1. Intentá abrir AwayLock y cerrá el aviso (no la mandes a la papelera).
+> 1. Intentá abrir AwayLock. En el aviso tocá **Listo**, no «Mover al basurero».
 > 2. Andá a **Ajustes del Sistema → Privacidad y seguridad**.
 > 3. Bajá hasta el mensaje sobre AwayLock y tocá **Abrir igualmente**.
 >

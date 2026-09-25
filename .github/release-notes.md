@@ -8,7 +8,7 @@
 
 AwayLock no está firmada con una cuenta de desarrollador de Apple, así que macOS muestra un aviso de que no puede verificarla. Para abrirla igual:
 
-1. Intentá abrir AwayLock una vez y cerrá el aviso.
+1. Intentá abrir AwayLock. En el aviso tocá **Listo**, no «Mover al basurero».
 2. Andá a **Ajustes del Sistema → Privacidad y seguridad**.
 3. Bajá hasta el mensaje sobre AwayLock y tocá **Abrir igualmente**.
 
@@ -16,4 +16,4 @@ Solo hace falta la primera vez. El código es abierto: podés revisarlo o compil
 
 ---
 
-**English:** AwayLock isn't signed with an Apple Developer ID. On first launch, open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.
+**English:** AwayLock isn't signed with an Apple Developer ID. On first launch, open it once and click **Done** (not "Move to Trash"), then go to **System Settings → Privacy & Security** and click **Open Anyway**.

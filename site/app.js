@@ -99,7 +99,7 @@
     st3: "Open it and allow <strong>Bluetooth</strong> access.",
     gkTitle: "The first time, macOS will stop it.",
     gkBody: "AwayLock isn't signed with a paid Apple Developer account, so macOS warns that it can't verify it. That's expected and only happens once:",
-    gk1: "Try to open it and dismiss the warning. Don't move it to the Trash.",
+    gk1: "Try to open it. In the warning, click <strong>Done</strong>, not \"Move to Trash\".",
     gk2: "Go to <strong>System Settings → Privacy &amp; Security</strong>.",
     gk3: "Scroll to the message about AwayLock and click <strong>Open Anyway</strong>.",
     gkTerminal: "Or, from the Terminal:",
