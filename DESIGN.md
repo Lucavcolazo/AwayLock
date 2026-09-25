@@ -75,7 +75,6 @@ rounded:
   pill: "999px"
   instrument: "12px"
   chart: "16px"
-  shot: "18px"
   callout: "20px"
   card: "24px"
   field: "28px"
@@ -238,7 +237,7 @@ A violet-tinted monochrome night carrying four semantic signal hues; nothing is 
 Depth is tonal first: sunk wells (`bg-sunk`, or 55% alpha) for instruments and code, raised night (`bg-raise`) for cards, violet hairlines (`line`, `line-strong`) on every edge. Shadows are long, soft and negatively spread, reading as distance above the night rather than as outlines. The one colored shadow family is violet glow, used only where the brand is speaking (primary CTA, privacy slab, closing icon). Frosted glass (`backdrop-filter` blur) is used where macOS itself uses it: the sticky nav, the drawn menu bar, and the drawn lock screen.
 
 ### Shadow Vocabulary
-- **Deep drop** (`box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9)`): screenshots, the drawn Mac screen, the login card.
+- **Deep drop** (`box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9)`): the drawn Mac screen and the login card.
 - **Float** (`box-shadow: 0 18px 40px -14px rgba(0, 0, 0, 0.8)`): small floating UI inside the drawn Mac (panel, toast); the radar readout uses `0 16px 40px -18px`.
 - **CTA glow** (`box-shadow: 0 10px 30px -10px rgba(123, 108, 255, 0.7), inset 0 -2px 0 rgba(58, 42, 158, 0.18)`): primary button at rest; hover grows to `0 14px 38px -10px` at 0.9.
 - **Field glow** (`box-shadow: 0 50px 100px -50px rgba(58, 42, 158, 0.9)`): the privacy slab.
@@ -251,7 +250,7 @@ Depth is tonal first: sunk wells (`bg-sunk`, or 55% alpha) for instruments and c
 
 - **Pills everywhere you touch or read** (999px): buttons, the language toggle, the segmented step control, chips, tags, the radar readout, the copy toast, input-like fields.
 - **Instrument wells** (12px): code blocks, the signal trace, the drawn menu-bar panel; the logic chart is 16px.
-- **Large surfaces step up with size:** screenshots 18px, the caution callout 20px, the login card 24px, the privacy slab 28px, the closing app icon 30px.
+- **Large surfaces step up with size:** the caution callout 20px, the login card 24px, the privacy slab 28px, the closing app icon 30px.
 - **Circles** for anything that is a point or a person: signal dots, the phone dot, status badges, avatars, the numbered install counters (36px, violet hairline ring).
 - **Thresholds are dashed, round-capped strokes:** `3 9` on the radar rings, `4 6` on chart threshold lines, drawn with `vector-effect: non-scaling-stroke`.
 - **Concentric rings** are the signature silhouette, shared with the app icon: the hero radar, the expanding pulse, and the three rings around the closing icon.
@@ -300,11 +299,11 @@ Confident, glowing on the dark, and physically responsive to a press.
 Motion shows the product working; it never decorates.
 - **Easing:** `ease-out` cubic-bezier(0.23, 1, 0.32, 1) for entrances and presses; `ease-in-out` cubic-bezier(0.77, 0, 0.175, 1) for wipes and draws.
 - **Entrances:** blur-and-rise (opacity 0, `blur(6 to 12px)`, 10 to 14px down → rest). The hero headline builds line by line (150 / 750 / 1350ms delays, 900ms each), the first two lines then dim to `ink-dim`, and the lede and CTAs rise in at 1800 to 2000ms.
-- **Reveals:** the logic chart draws left to right with a 2600ms `clip-path` wipe, then its lock marker and tags appear in sequence (1300 to 2500ms). Screenshots wipe down with a 1100ms `clip-path`. Reveals trigger once via IntersectionObserver at -12% bottom margin.
+- **Reveals:** the logic chart draws left to right with a 2600ms `clip-path` wipe, then its lock marker and tags appear in sequence (1300 to 2500ms). Reveals trigger once via IntersectionObserver at -12% bottom margin.
 - **Ambient loops:** the radar pulse (3.2s), the closing rings (3.6s, staggered 1.2s), a login spinner (800ms) and a blinking caret. The radar's JS loop pauses when offscreen or when the tab is hidden.
 - **Scroll-driven:** the walk scene is scrubbed by scroll position on a rAF-throttled passive listener; step buttons smooth-scroll to each phase.
 - **Progressive enhancement:** reveal states only apply under an `html.js` class, so without JavaScript all content is visible.
-- **Reduced motion:** entrance animations are removed and elements render at their final state (the first two headline lines already dimmed); pulse and ring loops stop and hide; spinner and caret stop; the walk track loses its 440vh height and the stage unpins, showing the first phase with the step buttons switching phases instantly; chart and screenshot wipes are removed; the radar renders one static frame; smooth scrolling is disabled.
+- **Reduced motion:** entrance animations are removed and elements render at their final state (the first two headline lines already dimmed); pulse and ring loops stop and hide; spinner and caret stop; the walk track loses its 440vh height and the stage unpins, showing the first phase with the step buttons switching phases instantly; the chart wipe is removed; the radar renders one static frame; smooth scrolling is disabled.
 
 ### Native macOS app (separate surface)
 The SwiftUI app in `Sources/AwayLock` shares the icon and the signal meanings but not the web tokens. It uses system colors (`.green` near, `.orange` leaving or paused, `.red` no signal, `.indigo` locked), system text styles with `.secondary`/`.tertiary` foregrounds, a grouped `Form` for the window, `MenuBarExtra` for the panel, and continuous rounded rectangles (10 to 12pt). Follow native macOS conventions there; do not port Archivo, Martian Mono, the night palette or web radii into it.
@@ -317,7 +316,7 @@ The SwiftUI app in `Sources/AwayLock` shares the icon and the signal meanings bu
 - **Do** set every sensor value and code string in Martian Mono with tabular figures, and everything else in Archivo (The Measurement Voice Rule).
 - **Do** widen and thicken Archivo as statements grow (`wdth` 108/112/115, weight 750/800/850) and leave body at `wdth` 100.
 - **Do** make every control a pill that scales to 0.97 on press over 160ms `ease-out`, with the 2px `violet-hi` focus ring.
-- **Do** caption any simulated instrument as illustrative, and use the real app screenshots for the real UI.
+- **Do** caption any simulated instrument as illustrative. The landing shows no app screenshots: the radar and the drawn Mac demonstrate the product.
 - **Do** give every animation a static, fully readable reduced-motion state and gate reveal-hidden states behind the `js` class.
 - **Do** swap download CTAs for the copy-link note on coarse-pointer, no-hover devices.
 

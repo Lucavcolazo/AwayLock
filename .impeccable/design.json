@@ -286,7 +286,7 @@
       {
         "name": "deep-drop",
         "value": "0 40px 80px -40px rgba(0, 0, 0, 0.9)",
-        "purpose": "Screenshots, drawn Mac screen, login card."
+        "purpose": "Drawn Mac screen, login card."
       },
       {
         "name": "float",
@@ -349,11 +349,6 @@
         "name": "chart-draw",
         "value": "clip-path inset(0 100% 0 0) -> inset(0), 2600ms ease-in-out",
         "purpose": "Logic chart; tags follow at 1400/1900/2500ms."
-      },
-      {
-        "name": "shot-wipe",
-        "value": "clip-path inset(0 0 100% 0 round 18px) -> inset(0), 1100ms ease-in-out",
-        "purpose": "Screenshot reveals."
       },
       {
         "name": "radar-pulse",
@@ -511,7 +506,7 @@
       "Do set every sensor value and code string in Martian Mono with tabular figures, and everything else in Archivo (The Measurement Voice Rule).",
       "Do widen and thicken Archivo as statements grow (`wdth` 108/112/115, weight 750/800/850) and leave body at `wdth` 100.",
       "Do make every control a pill that scales to 0.97 on press over 160ms `ease-out`, with the 2px `violet-hi` focus ring.",
-      "Do caption any simulated instrument as illustrative, and use the real app screenshots for the real UI.",
+      "Do caption any simulated instrument as illustrative. The landing shows no app screenshots: the radar and the drawn Mac demonstrate the product.",
       "Do give every animation a static, fully readable reduced-motion state and gate reveal-hidden states behind the `js` class.",
       "Do swap download CTAs for the copy-link note on coarse-pointer, no-hover devices."
     ],

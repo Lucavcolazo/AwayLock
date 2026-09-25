@@ -671,7 +671,7 @@ code { font-family: var(--font-mono); font-size: 0.86em; }
 }
 
 /* Sin esto, un bloque de código largo ensancha la grilla y se sale de la pantalla. */
-.split > *, .app-grid > *, .install-grid > *, .hero > *, .walk-stage > * { min-width: 0; }
+.split > *, .install-grid > *, .hero > *, .walk-stage > * { min-width: 0; }
 
 .split {
   display: grid;
@@ -866,22 +866,6 @@ code { font-family: var(--font-mono); font-size: 0.86em; }
 .cpu strong { color: #b6ffcf; font-weight: 850; }
 .footnote { margin: 0; font-size: 13px; color: rgba(236, 233, 255, 0.72); }
 
-/* App */
-.app-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 0.9fr);
-  gap: clamp(24px, 3vw, 44px);
-  align-items: start;
-  margin-top: 48px;
-}
-.shot { margin: 0; }
-.shot img { width: 100%; height: auto; border-radius: 18px; border: 1px solid var(--line); box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9); }
-.shot-window img { max-height: 780px; width: auto; margin-inline: auto; }
-.shot figcaption { display: grid; gap: 4px; margin-top: 18px; color: var(--ink-2); }
-.shot figcaption strong { color: var(--ink); font-size: 18px; }
-.en-only { display: none; }
-html[lang="en"] .en-only { display: inline; }
-
 /* Instalar */
 .install-grid {
   display: grid;
@@ -1059,9 +1043,6 @@ html[lang="en"] .en-only { display: inline; }
    anima cuando el JS confirma que puede hacerlo. */
 .js .login-card.reveal { opacity: 0; filter: blur(12px); transform: scale(0.96); transition: opacity 600ms ease, filter 700ms ease, transform 900ms var(--ease-out); }
 .js .login-card.reveal.is-in { opacity: 1; filter: none; transform: none; }
-.js .shot.reveal img { clip-path: inset(0 0 100% 0 round 18px); transition: clip-path 1100ms var(--ease-in-out); }
-.js .shot.reveal.is-in img { clip-path: inset(0 0 0 0 round 18px); }
-.js .shot-window.reveal img { transition-delay: 180ms; }
 
 /* ---------- Pantallas chicas ---------- */
 
@@ -1087,9 +1068,8 @@ html[lang="en"] .en-only { display: inline; }
   .readouts { display: none; }
   .trace { height: 70px; }
   .steps button { padding: 0 10px; font-size: 13px; }
-  .split, .app-grid, .install-grid { grid-template-columns: 1fr; }
+  .split, .install-grid { grid-template-columns: 1fr; }
   .gatekeeper { grid-row: auto; }
-  .shot-window img { max-height: 620px; }
 }
 
 @media (max-width: 700px) {
@@ -1138,5 +1118,4 @@ html[lang="en"] .en-only { display: inline; }
   .cap, .toast, .panel, .chips li, .tag, .js .reveal { transform: none !important; filter: none !important; }
   .js .logic-svg { clip-path: none; }
   .js .login-card.reveal { opacity: 1; }
-  .js .shot.reveal img { clip-path: none; }
 }
