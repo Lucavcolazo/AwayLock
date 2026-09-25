@@ -39,17 +39,21 @@ final class ProximityScanner: NSObject {
 
     private(set) var targetID: UUID?
     private(set) var connectedName: String?
-    var bluetoothOn: Bool { central.state == .poweredOn }
+    var bluetoothOn: Bool { central?.state == .poweredOn }
 
+    /// Queda en nil si se crea sin Bluetooth; todo lo que lo usa pasa antes por `bluetoothOn`.
     private var central: CBCentralManager!
     private var target: CBPeripheral?
     private var nearby: [UUID: NearbyDevice] = [:]
     private var pollTimer: Timer?
     private var lastRead = Date.distantPast
 
-    override init() {
+    /// `bluetooth: false` sirve para dibujar la interfaz sin tocar el Bluetooth (capturas).
+    init(bluetooth: Bool = true) {
         super.init()
-        central = CBCentralManager(delegate: self, queue: .main)
+        if bluetooth {
+            central = CBCentralManager(delegate: self, queue: .main)
+        }
     }
 
     func monitor(_ id: UUID?) {

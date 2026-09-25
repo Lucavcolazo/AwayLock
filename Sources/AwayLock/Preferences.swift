@@ -2,63 +2,81 @@ import AwayLockCore
 import Foundation
 
 final class Preferences {
-    private let defaults = UserDefaults.standard
+    private static let fallback: [String: Any] = [
+        "enabled": true,
+        "lockRSSI": -80,
+        "nearRSSI": -60,
+        "lockDelay": 5.0,
+        "lostTimeout": 30.0,
+        "wakeOnReturn": true,
+        "passive": false,
+    ]
 
-    init() {
-        defaults.register(defaults: [
-            "enabled": true,
-            "lockRSSI": -80,
-            "nearRSSI": -60,
-            "lockDelay": 5.0,
-            "lostTimeout": 30.0,
-            "wakeOnReturn": true,
-            "passive": false,
-        ])
+    private let defaults: UserDefaults?
+    private var memory: [String: Any] = [:]
+
+    /// `inMemory: true` no lee ni escribe en disco: sirve para las capturas.
+    init(inMemory: Bool = false) {
+        defaults = inMemory ? nil : .standard
+        defaults?.register(defaults: Self.fallback)
+    }
+
+    private func value(_ key: String) -> Any? {
+        if let defaults { return defaults.object(forKey: key) }
+        return memory[key] ?? Self.fallback[key]
+    }
+
+    private func store(_ value: Any?, _ key: String) {
+        if let defaults {
+            defaults.set(value, forKey: key)
+        } else {
+            memory[key] = value
+        }
     }
 
     var enabled: Bool {
-        get { defaults.bool(forKey: "enabled") }
-        set { defaults.set(newValue, forKey: "enabled") }
+        get { value("enabled") as? Bool ?? true }
+        set { store(newValue, "enabled") }
     }
 
     var deviceID: UUID? {
-        get { defaults.string(forKey: "deviceID").flatMap(UUID.init(uuidString:)) }
-        set { defaults.set(newValue?.uuidString, forKey: "deviceID") }
+        get { (value("deviceID") as? String).flatMap(UUID.init(uuidString:)) }
+        set { store(newValue?.uuidString, "deviceID") }
     }
 
     var deviceName: String? {
-        get { defaults.string(forKey: "deviceName") }
-        set { defaults.set(newValue, forKey: "deviceName") }
+        get { value("deviceName") as? String }
+        set { store(newValue, "deviceName") }
     }
 
     var lockRSSI: Int {
-        get { defaults.integer(forKey: "lockRSSI") }
-        set { defaults.set(newValue, forKey: "lockRSSI") }
+        get { value("lockRSSI") as? Int ?? -80 }
+        set { store(newValue, "lockRSSI") }
     }
 
     var nearRSSI: Int {
-        get { defaults.integer(forKey: "nearRSSI") }
-        set { defaults.set(newValue, forKey: "nearRSSI") }
+        get { value("nearRSSI") as? Int ?? -60 }
+        set { store(newValue, "nearRSSI") }
     }
 
     var lockDelay: TimeInterval {
-        get { defaults.double(forKey: "lockDelay") }
-        set { defaults.set(newValue, forKey: "lockDelay") }
+        get { value("lockDelay") as? Double ?? 5 }
+        set { store(newValue, "lockDelay") }
     }
 
     var lostTimeout: TimeInterval {
-        get { defaults.double(forKey: "lostTimeout") }
-        set { defaults.set(newValue, forKey: "lostTimeout") }
+        get { value("lostTimeout") as? Double ?? 30 }
+        set { store(newValue, "lostTimeout") }
     }
 
     var wakeOnReturn: Bool {
-        get { defaults.bool(forKey: "wakeOnReturn") }
-        set { defaults.set(newValue, forKey: "wakeOnReturn") }
+        get { value("wakeOnReturn") as? Bool ?? true }
+        set { store(newValue, "wakeOnReturn") }
     }
 
     var passive: Bool {
-        get { defaults.bool(forKey: "passive") }
-        set { defaults.set(newValue, forKey: "passive") }
+        get { value("passive") as? Bool ?? false }
+        set { store(newValue, "passive") }
     }
 
     var config: PresenceConfig {

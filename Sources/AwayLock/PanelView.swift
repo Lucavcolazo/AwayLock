@@ -3,6 +3,8 @@ import SwiftUI
 struct PanelView: View {
     @EnvironmentObject private var model: AppModel
     @AppStorage("settingsExpanded") private var settingsExpanded = false
+    /// Fija si los ajustes se ven abiertos, sin tocar lo guardado (para las capturas).
+    var settingsExpandedOverride: Bool?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -19,12 +21,12 @@ struct PanelView: View {
                     title: model.enabled ? "Activado" : "En pausa",
                     isOn: model.enabled
                 ) { model.enabled.toggle() }
-                Tile(symbol: "lock.fill", title: "Bloquear ahora", isOn: false) { model.lockNow() }
+                Tile(symbol: "lock.fill", title: "Bloquear", isOn: false) { model.lockNow() }
             }
 
             DeviceSection()
 
-            SettingsSection(expanded: $settingsExpanded)
+            SettingsSection(expanded: settingsExpandedOverride.map { .constant($0) } ?? $settingsExpanded)
 
             Divider()
 

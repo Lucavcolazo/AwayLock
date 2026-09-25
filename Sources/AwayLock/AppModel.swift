@@ -13,9 +13,13 @@ struct StatusInfo {
 /// Une el motor de presencia, el Bluetooth y la pantalla, y expone el estado a la interfaz.
 @MainActor
 final class AppModel: ObservableObject, ProximityScannerDelegate {
-    private let prefs = Preferences()
+    private let prefs: Preferences
     private let engine = PresenceEngine()
-    private let scanner = ProximityScanner()
+    private let scanner: ProximityScanner
+    /// Modo capturas: sin Bluetooth, sin bloquear nada y sin tocar tus ajustes.
+    private let isPreview: Bool
+    /// Lista de dispositivos de ejemplo para las capturas.
+    private var previewDevices: [NearbyDevice]?
 
     /// Avanza una vez por segundo; publicarlo hace que la interfaz se redibuje.
     @Published private(set) var now = Date()
@@ -30,8 +34,14 @@ final class AppModel: ObservableObject, ProximityScannerDelegate {
     private var pendingUnlockCheck: (lockedAt: Date, unlockedAt: Date)?
     private var observers: [NSObjectProtocol] = []
 
-    init() {
+    init(preview: Bool = false) {
+        isPreview = preview
+        prefs = Preferences(inMemory: preview)
+        scanner = ProximityScanner(bluetooth: !preview)
         engine.config = prefs.config
+        // En modo capturas no escuchamos eventos ni corremos el reloj: nada puede bloquear.
+        guard !preview else { return }
+
         scanner.delegate = self
         scanner.passive = prefs.passive
         scanner.monitor(prefs.deviceID)
@@ -115,11 +125,14 @@ final class AppModel: ObservableObject, ProximityScannerDelegate {
 
     // MARK: - Estado visible
 
+    private var bluetoothOn: Bool { isPreview || scanner.bluetoothOn }
+    private var nearbyDevices: [NearbyDevice] { previewDevices ?? scanner.nearbyDevices() }
+
     var rssi: Int? { engine.isLost(at: now) ? nil : engine.smoothedRSSI }
 
     var menuBarSymbol: String {
         guard prefs.enabled else { return "pause.circle" }
-        guard prefs.deviceID != nil, scanner.bluetoothOn else { return "iphone.slash" }
+        guard prefs.deviceID != nil, bluetoothOn else { return "iphone.slash" }
         switch engine.state {
         case .present: return "iphone"
         case .leaving: return "figure.walk"
@@ -134,7 +147,7 @@ final class AppModel: ObservableObject, ProximityScannerDelegate {
             return StatusInfo(title: "Elegí tu iPhone", detail: "Abrí «Dispositivo» y acercalo a la Mac",
                               symbol: "iphone.slash", tint: .gray)
         }
-        guard scanner.bluetoothOn else {
+        guard bluetoothOn else {
             return StatusInfo(title: "Bluetooth apagado", detail: "Prendelo para medir la señal",
                               symbol: "antenna.radiowaves.left.and.right.slash", tint: .gray)
         }
@@ -168,7 +181,7 @@ final class AppModel: ObservableObject, ProximityScannerDelegate {
 
     /// Por defecto solo iPhones, para no mezclar con el reloj, los AirPods, etc.
     var visibleDevices: [NearbyDevice] {
-        scanner.nearbyDevices().filter {
+        nearbyDevices.filter {
             showAllDevices || $0.name?.localizedCaseInsensitiveContains("iPhone") == true
         }
     }
@@ -177,7 +190,7 @@ final class AppModel: ObservableObject, ProximityScannerDelegate {
         guard id != prefs.deviceID else { return }
         objectWillChange.send()
         prefs.deviceID = id
-        prefs.deviceName = id.flatMap { id in scanner.nearbyDevices().first { $0.id == id }?.name }
+        prefs.deviceName = id.flatMap { id in nearbyDevices.first { $0.id == id }?.name }
         hint = nil
         engine.reset()
         scanner.monitor(id)
@@ -247,3 +260,51 @@ final class AppModel: ObservableObject, ProximityScannerDelegate {
         ScreenControl.lock()
     }
 }
+
+#if DEBUG
+// MARK: - Capturas
+
+enum PreviewScene {
+    case near, leaving, away
+}
+
+extension AppModel {
+    /// Modelo con datos de ejemplo para dibujar el panel en las capturas del README.
+    /// Alimenta el motor real con lecturas inventadas, así el estado sale igual que en la app.
+    static func preview(_ scene: PreviewScene, devices: Bool = false) -> AppModel {
+        let model = AppModel(preview: true)
+        let deviceID = UUID()
+        model.prefs.deviceID = deviceID
+        model.prefs.deviceName = "iPhone de Luca"
+        model.prefs.lockRSSI = -75
+        model.engine.config = model.prefs.config
+
+        let now = Date()
+        func feed(_ rssi: Int, _ seconds: ClosedRange<Int>) {
+            for second in seconds {
+                _ = model.engine.add(rssi: rssi, at: now.addingTimeInterval(TimeInterval(second)))
+            }
+        }
+        switch scene {
+        case .near:
+            feed(-48, -8 ... 0)
+        case .leaving:
+            feed(-48, -12 ... -5)
+            feed(-84, -4 ... 0)
+        case .away:
+            feed(-48, -30 ... -20)
+            feed(-86, -19 ... 0)
+        }
+        model.now = now
+
+        if devices {
+            model.previewDevices = [
+                NearbyDevice(id: deviceID, name: "iPhone de Luca", isApple: true, rssi: -46, lastSeen: now),
+                NearbyDevice(id: UUID(), name: "iPhone del trabajo", isApple: true, rssi: -71, lastSeen: now),
+            ]
+            model.deviceListOpen = true
+        }
+        return model
+    }
+}
+#endif
