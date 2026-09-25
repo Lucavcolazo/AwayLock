@@ -11,7 +11,7 @@ Volvés y tu Apple Watch te la desbloquea, sin tocar nada.
 ![macOS 13+](https://img.shields.io/badge/macOS-13%2B-black?logo=apple)
 [![Licencia MIT](https://img.shields.io/badge/licencia-MIT-6E56CF)](LICENSE)
 
-[**Descargar**](https://github.com/Lucavcolazo/AwayLock/releases/latest) · [English](README.en.md)
+[**Descargar**](https://github.com/Lucavcolazo/AwayLock/releases/latest) · [Sitio](https://lucavcolazo.github.io/AwayLock/) · [English](README.en.md)
 
 <img src="docs/estados.png" alt="Los tres estados de AwayLock: cerca, alejándote y bloqueada" width="100%">
 
@@ -150,6 +150,8 @@ cd AwayLock
 - `swift run AwayLock --snapshots docs` regenera las imágenes de este README con datos de ejemplo.
 - `./scripts/make-icon.sh` regenera el ícono a partir de `scripts/icon.swift`.
 - `./scripts/release.sh` arma `dist/AwayLock-<versión>.zip`. Al subir un tag `vX.Y.Z`, GitHub Actions lo arma y publica el Release solo.
+- `site/` es la landing (HTML, CSS y JS sin dependencias). Se publica sola en GitHub Pages al cambiar en `main`. `swift scripts/og-image.swift site/assets/og.png` regenera su imagen de vista previa.
+- `./scripts/render-promo.sh` genera el video promocional de 15 s (`dist/awaylock-promo.mp4`) a partir de `promo/`. Para verlo en el navegador, serví la carpeta del repo y abrí `promo/`.
 - `Sources/AwayLockCore` tiene la lógica pura; `Sources/AwayLock`, el Bluetooth, la pantalla y la interfaz.
 
 </details>

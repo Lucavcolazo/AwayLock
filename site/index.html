@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AwayLock · Tu Mac se bloquea sola cuando te alejás</title>
+  <meta name="description" content="App gratuita y de código abierto para la barra de menú de macOS. Bloquea tu Mac cuando te alejás con el iPhone; al volver, tu Apple Watch la desbloquea.">
+  <meta name="theme-color" content="#0A0816">
+  <link rel="icon" type="image/png" href="assets/icon-64.png">
+  <link rel="apple-touch-icon" href="assets/icon-180.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lucavcolazo.github.io/AwayLock/">
+  <meta property="og:title" content="AwayLock · Tu Mac se bloquea sola cuando te alejás">
+  <meta property="og:description" content="Mide la señal de tu iPhone y bloquea la Mac cuando te vas. Gratis, de código abierto y sin tocar tu contraseña.">
+  <meta property="og:image" content="https://lucavcolazo.github.io/AwayLock/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+<!--
+THESIS: The signal is the interface. The page shows AwayLock working (radar rings as thresholds, a scroll-scrubbed walk away from a Mac, a live dBm trace) instead of the category default: hero, feature-card grid, screenshot, CTA.
+OWN-WORLD: Near-black violet ground with a faint measurement grid and one violet glow; heavy wide Archivo display; Martian Mono only for real readings (dBm, meters, seconds); signal colors carry meaning: green = near / "volviste", red = lock threshold, orange = leaving, violet = locked.
+STORY: A dev on X understands in one viewport that walking away locks the Mac, watches it happen, trusts it (never touches the password, no network, open source), and downloads it or reads the code.
+FIRST VIEWPORT: Left: kinetic three-line headline, one-line lede, "Descargar para macOS" primary button plus "Ver el código", version meta. Right: large radar with inner green ring and outer red ring, the iPhone dot drifting out and back, the padlock closing and opening, live dBm readout.
+FORM: Brief-pinned direction (user's Wallbit-style promo reference in the icon's violet); the roll's assignment was overridden by the pinned brief. Seed key 5fd5d9af.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<a class="skip" href="#main" data-i18n="skip">Saltar al contenido</a>
+
+<header class="nav">
+  <a class="brand" href="#top" aria-label="AwayLock">
+    <img src="assets/icon-64.png" alt="" width="28" height="28">
+    <span>AwayLock</span>
+  </a>
+  <nav class="nav-links" aria-label="Secciones">
+    <a href="#como-funciona" data-i18n="navHow">Cómo funciona</a>
+    <a href="#privacidad" data-i18n="navPrivacy">Privacidad</a>
+    <a href="#instalar" data-i18n="navInstall">Instalar</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="lang" type="button" data-lang-toggle aria-label="Switch to English">EN</button>
+    <a class="btn btn-ghost btn-sm" href="https://github.com/Lucavcolazo/AwayLock">
+      <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span>GitHub</span>
+    </a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Portada -->
+  <section class="hero" id="top">
+    <div class="hero-copy">
+      <h1 class="kinetic">
+        <span class="k k1" data-i18n="h1a">Te levantás.</span>
+        <span class="k k2" data-i18n="h1b">Te vas.</span>
+        <span class="k k3" data-i18n="h1c">Tu Mac se bloquea.</span>
+      </h1>
+      <p class="lede" data-i18n="lede">AwayLock mide la señal Bluetooth de tu iPhone desde la barra de menú. Cuando te alejás, bloquea la Mac. Cuando volvés, tu Apple Watch la desbloquea.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary desk-only" href="https://github.com/Lucavcolazo/AwayLock/releases/latest">
+          <svg class="i" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m0 0-4-4m4 4 4-4M4 16h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span data-i18n="download">Descargar para macOS</span>
+        </a>
+        <a class="btn btn-ghost desk-only" href="https://github.com/Lucavcolazo/AwayLock" data-i18n="seeCode">Ver el código</a>
+      </div>
+      <div class="mobile-note touch-only" role="note">
+        <p data-i18n-html="mobileNote"><strong>AwayLock es para Mac.</strong> Abrí esta página en tu compu para descargarla.</p>
+        <div class="cta-row">
+          <button class="btn btn-primary" type="button" data-copy-link>
+            <span data-i18n="copyLink">Copiar el link</span>
+          </button>
+          <a class="btn btn-ghost" href="https://github.com/Lucavcolazo/AwayLock" data-i18n="seeCode">Ver el código</a>
+        </div>
+      </div>
+      <p class="meta" data-i18n="meta">v0.1.0 · gratis · código abierto (MIT) · macOS 13+</p>
+    </div>
+
+    <figure class="radar" aria-hidden="true">
+      <div class="radar-stage">
+      <svg viewBox="0 0 400 400" class="radar-svg">
+        <defs>
+          <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#7B6CFF" stop-opacity=".55"/>
+            <stop offset="60%" stop-color="#3A2A9E" stop-opacity=".18"/>
+            <stop offset="100%" stop-color="#3A2A9E" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="200" cy="200" r="190" fill="url(#radarGlow)"/>
+        <circle class="ring ring-far" cx="200" cy="200" r="178"/>
+        <circle class="ring ring-lock" cx="200" cy="200" r="128"/>
+        <circle class="ring ring-near" cx="200" cy="200" r="78"/>
+        <circle class="pulse" cx="200" cy="200" r="40"/>
+        <g class="padlock" transform="translate(200 206)">
+          <path class="shackle" d="M-15 -6 V-19 a15 15 0 0 1 30 0 V-6" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+          <rect x="-24" y="-8" width="48" height="38" rx="9" fill="#fff"/>
+          <circle cx="0" cy="9" r="4.5" fill="#3A2A9E"/>
+        </g>
+        <g class="phone-dot">
+          <circle r="15" fill="#4ADE80" stroke="#fff" stroke-width="4"/>
+        </g>
+      </svg>
+      <figcaption class="radar-read">
+        <span class="read-state" data-radar-state>Cerca</span>
+        <span class="read-value mono" data-radar-value>−50 dBm</span>
+      </figcaption>
+      </div>
+      <ul class="radar-legend">
+        <li><i class="dot dot-green"></i><span data-i18n="legendNear">anillo verde: volviste</span></li>
+        <li><i class="dot dot-red"></i><span data-i18n="legendLock">anillo rojo: bloquea</span></li>
+      </ul>
+    </figure>
+  </section>
+
+  <!-- La caminata: escena guiada por el scroll -->
+  <section class="walk" id="como-funciona" aria-labelledby="walk-title">
+    <div class="walk-track" data-walk-track>
+      <div class="walk-stage">
+        <div class="walk-copy">
+          <h2 id="walk-title" class="h2" data-i18n="walkTitle">Así se ve cuando te vas.</h2>
+          <ol class="captions" data-captions>
+            <li class="cap is-active" data-phase="near">
+              <h3 data-i18n="capNearT">Estás en la compu.</h3>
+              <p data-i18n="capNearP">La señal de tu iPhone llega fuerte. AwayLock no hace nada.</p>
+            </li>
+            <li class="cap" data-phase="leaving">
+              <h3 data-i18n="capLeavingT">Te alejás.</h3>
+              <p data-i18n="capLeavingP">La señal cae debajo del umbral rojo. Espera unos segundos, por si solo te diste vuelta.</p>
+            </li>
+            <li class="cap" data-phase="locked">
+              <h3 data-i18n="capLockedT">Bloqueada.</h3>
+              <p data-i18n="capLockedP">Nadie ve tu pantalla. Y no vuelve a bloquear hasta verte cerca otra vez.</p>
+            </li>
+            <li class="cap" data-phase="back">
+              <h3 data-i18n="capBackT">Volvés.</h3>
+              <p data-i18n="capBackP">La señal supera el umbral verde, la pantalla se prende y tu Apple Watch la desbloquea.</p>
+            </li>
+          </ol>
+          <div class="readouts mono" aria-hidden="true">
+            <div><span class="ro-value" data-ro-distance>0,5 m</span><span class="ro-label" data-i18n="roDistance">distancia</span></div>
+            <div><span class="ro-value" data-ro-rssi>−48 dBm</span><span class="ro-label" data-i18n="roSignal">señal</span></div>
+          </div>
+          <div class="steps" role="group" aria-label="Pasos de la demostración" data-i18n-aria="stepsAria">
+            <button type="button" data-step data-i18n="stepNear">Cerca</button>
+            <button type="button" data-step data-i18n="stepLeaving">Te alejás</button>
+            <button type="button" data-step data-i18n="stepLocked">Bloqueada</button>
+            <button type="button" data-step data-i18n="stepBack">Volvés</button>
+          </div>
+        </div>
+
+        <div class="walk-visual" aria-hidden="true">
+          <div class="mac" data-mac>
+            <div class="mac-screen">
+              <div class="wall"></div>
+              <div class="menubar">
+                <span class="mb-app">Finder</span>
+                <span class="mb-menu" data-i18n="mbFile">Archivo</span>
+                <span class="mb-menu" data-i18n="mbEdit">Edición</span>
+                <span class="mb-menu" data-i18n="mbView">Ver</span>
+                <span class="mb-spacer"></span>
+                <span class="mb-status" data-mb-icon>
+                  <svg viewBox="0 0 16 16"><rect x="4.5" y="1.5" width="7" height="13" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M7 12.5h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </span>
+                <span class="mb-time" data-clock>14:32</span>
+              </div>
+              <div class="panel" data-panel>
+                <div class="panel-head">
+                  <span class="panel-badge" data-panel-badge>
+                    <svg viewBox="0 0 20 20" class="pb-near"><circle cx="8" cy="6.5" r="3" fill="currentColor"/><path d="M2.5 16c.6-3.2 2.9-5 5.5-5s4.2 1.2 5 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m12.5 12.5 2 2 3.5-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg viewBox="0 0 20 20" class="pb-walk"><circle cx="11.5" cy="3.5" r="2" fill="currentColor"/><path d="M10.5 6.5 8 12l3 2 1 4M9 9l-3 1.5M11 8.5l2.5 2.5 2.5.5M8 12l-2.5 5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <div>
+                    <p class="panel-title" data-panel-title>Cerca</p>
+                    <p class="panel-detail mono" data-panel-detail>Tu iPhone · −48 dBm</p>
+                  </div>
+                </div>
+                <div class="meter">
+                  <div class="meter-bar"><i class="z z-red"></i><i class="z z-mid"></i><i class="z z-green"></i></div>
+                  <span class="meter-knob" data-knob></span>
+                </div>
+                <div class="meter-legend mono"><span><i></i>−75</span><span>−60<i></i></span></div>
+              </div>
+              <div class="lockscreen" data-lockscreen>
+                <p class="ls-date" data-date>viernes 25 de septiembre</p>
+                <p class="ls-time" data-clock>14:32</p>
+                <div class="ls-user">
+                  <span class="ls-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4" fill="currentColor"/><path d="M4.5 20c1-4 4-6 7.5-6s6.5 2 7.5 6" fill="currentColor"/></svg></span>
+                  <span class="ls-field" data-i18n="lsHint">Ingresá la contraseña</span>
+                </div>
+              </div>
+              <div class="toast" data-toast>
+                <span class="toast-icon"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="12" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 5l.6-3h4.8l.6 3M9 19l.6 3h4.8l.6-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+                <span>
+                  <strong data-i18n="toastT">Desbloqueada</strong>
+                  <span data-i18n="toastP">con tu Apple Watch</span>
+                </span>
+              </div>
+            </div>
+            <div class="mac-base"></div>
+          </div>
+
+          <div class="trace">
+            <svg viewBox="0 0 600 180" preserveAspectRatio="none" class="trace-svg">
+              <line class="th th-green" x1="0" x2="600" y1="0" y2="0" data-th-green/>
+              <line class="th th-red" x1="0" x2="600" y1="0" y2="0" data-th-red/>
+              <polyline class="trace-line" data-trace points=""/>
+              <circle class="trace-head" r="5" data-trace-head cx="0" cy="0"/>
+            </svg>
+            <div class="trace-labels mono">
+              <span class="tl tl-green" data-tl-green>−60 dBm</span>
+              <span class="tl tl-red" data-tl-red>−75 dBm</span>
+            </div>
+          </div>
+
+          <div class="ruler">
+            <div class="ruler-line">
+              <span class="ruler-mac"><svg viewBox="0 0 20 14"><rect x="3" y="1" width="14" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M1 12.5h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <span class="ruler-phone" data-ruler-phone></span>
+            </div>
+            <div class="ruler-ticks mono"><span>0 m</span><span>2</span><span>4</span><span>6</span><span>8 m</span></div>
+          </div>
+          <p class="synthetic" data-i18n="synthetic">Demostración con valores ilustrativos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contraseña -->
+  <section class="section password" aria-labelledby="pw-title">
+    <div class="split">
+      <div>
+        <h2 id="pw-title" class="h2" data-i18n="pwTitle">Nunca toca tu contraseña.</h2>
+        <p class="body" data-i18n="pwBody">Otras apps de este tipo desbloquean la Mac escribiendo tu contraseña por vos: la guardan en el Llavero y la tipean con permiso de Accesibilidad. AwayLock solo bloquea. Desbloquear sigue siendo cosa de macOS: tu Apple Watch, Touch ID o tu contraseña, como siempre.</p>
+        <ul class="nots">
+          <li><svg class="i" viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-i18n="not1">No guarda tu contraseña</span></li>
+          <li><svg class="i" viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-i18n="not2">No pide permiso de Accesibilidad</span></li>
+          <li><svg class="i" viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-i18n="not3">No simula que tocás el teclado</span></li>
+        </ul>
+      </div>
+      <div class="login" aria-hidden="true">
+        <div class="login-card reveal">
+          <span class="login-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4" fill="currentColor"/><path d="M4.5 20c1-4 4-6 7.5-6s6.5 2 7.5 6" fill="currentColor"/></svg></span>
+          <p class="login-name" data-i18n="loginName">Tu Mac</p>
+          <div class="login-field"><span class="caret"></span><span class="login-placeholder" data-i18n="loginPh">Ingresá la contraseña</span></div>
+          <p class="login-watch">
+            <span class="spinner"></span>
+            <span data-i18n="loginWatch">Desbloqueando con Apple Watch…</span>
+          </p>
+        </div>
+        <p class="login-note" data-i18n="loginNote">Esta pantalla es de macOS. AwayLock no escribe acá.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lógica -->
+  <section class="section logic" aria-labelledby="logic-title">
+    <h2 id="logic-title" class="h2 narrow" data-i18n="logicTitle">Pensada para no molestarte.</h2>
+    <p class="body narrow" data-i18n="logicBody">Una app que te bloquea mientras estás sentado es peor que no tener ninguna. Por eso la lógica tiene frenos. Acá, alguien sentado con la señal floja: bloquea una sola vez y no se traba en un ida y vuelta.</p>
+
+    <figure class="logic-chart reveal" aria-hidden="true">
+      <svg viewBox="0 0 1000 300" class="logic-svg" preserveAspectRatio="none">
+        <line class="th th-green" x1="0" x2="1000" y1="0" y2="0" data-lth-green/>
+        <line class="th th-red" x1="0" x2="1000" y1="0" y2="0" data-lth-red/>
+        <path class="logic-line" data-logic-path d=""/>
+        <line class="lock-mark" data-lock-mark x1="0" x2="0" y1="20" y2="280"/>
+      </svg>
+      <div class="logic-tags" data-logic-tags>
+        <span class="tag tag-lock" data-tag-lock data-i18n="tagLock">bloquea una vez</span>
+        <span class="tag tag-calm" data-tag-calm data-i18n="tagCalm">señal floja: no vuelve a bloquear</span>
+        <span class="tag tag-arm" data-tag-arm data-i18n="tagArm">recién acá se vuelve a armar</span>
+      </div>
+    </figure>
+
+    <dl class="facts">
+      <div class="f-median"><dt data-i18n="f1t">Mediana de 4 s</dt><dd data-i18n="f1d">Un pico suelto de señal no cuenta: ni te marca como presente ni te bloquea.</dd></div>
+      <div class="f-thresholds"><dt data-i18n="f2t">Dos umbrales</dt><dd data-i18n="f2d">Bloquea debajo de −75 dBm y te da por vuelto arriba de −60 dBm. El hueco entre los dos evita el ida y vuelta.</dd></div>
+      <div class="f-delay"><dt data-i18n="f3t">5 s de demora</dt><dd data-i18n="f3d">Si te diste vuelta un segundo, no pasa nada.</dd></div>
+      <div class="f-grace"><dt data-i18n="f4t">20 s de gracia</dt><dd data-i18n="f4d">Después de desbloquear, no te bloquea enseguida.</dd></div>
+      <div class="f-lock"><dt data-i18n="f5t">Reinicio al despertar</dt><dd data-i18n="f5d">Abrís la tapa y no te bloquea por lecturas de antes del reposo.</dd></div>
+    </dl>
+    <p class="code-link">
+      <a href="https://github.com/Lucavcolazo/AwayLock/blob/main/Sources/AwayLockCore/PresenceEngine.swift" class="link">
+        <span data-i18n="readCode">Leé PresenceEngine.swift</span>
+        <svg class="i" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 13 13 7M8 7h5v5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <span class="muted" data-i18n="tests">11 tests, incluido el del bucle</span>
+    </p>
+  </section>
+
+  <!-- Privacidad -->
+  <section class="section privacy" id="privacidad" aria-labelledby="privacy-title">
+    <div class="privacy-field">
+      <h2 id="privacy-title" class="h2" data-i18n="privacyTitle">Todo pasa en tu Mac.</h2>
+      <p class="body" data-i18n="privacyBody">Sin internet, sin cuentas, sin datos que salgan de tu compu. Lo único que hace es medir la señal Bluetooth de tu iPhone.</p>
+      <ul class="chips" data-chips>
+        <li data-i18n="chip1">Sin conexión a internet</li>
+        <li data-i18n="chip2">Sin cuentas ni registro</li>
+        <li data-i18n="chip3">Sin contraseñas guardadas</li>
+        <li data-i18n="chip4">Código abierto · MIT</li>
+        <li data-i18n="chip5">Swift nativo</li>
+        <li data-i18n="chip6">Chip Apple e Intel</li>
+        <li data-i18n="chip7">Bluetooth de bajo consumo</li>
+      </ul>
+      <p class="cpu" data-i18n-html="cpu">Con el panel cerrado usa <strong>~0&nbsp;%</strong> de CPU.</p>
+      <p class="footnote" data-i18n="cpuNote">Medido en la Mac del autor.</p>
+    </div>
+  </section>
+
+  <!-- La app -->
+  <section class="section app" aria-labelledby="app-title">
+    <h2 id="app-title" class="h2 narrow" data-i18n="appTitle">Dos lugares, cada uno para lo suyo.</h2>
+    <div class="app-grid">
+      <figure class="shot shot-menu reveal">
+        <img src="assets/estados.png" width="1400" height="523" loading="lazy" alt="El panel de la barra de menú en tres estados: cerca, alejándote y bloqueada." data-i18n-alt="altMenu">
+        <figcaption>
+          <strong data-i18n="menuT">En la barra de menú</strong>
+          <span data-i18n="menuP">Si estás cerca, alejándote o lejos, el medidor en vivo, pausar y bloquear ya.</span>
+        </figcaption>
+      </figure>
+      <figure class="shot shot-window reveal">
+        <img src="assets/ventana.png" width="645" height="1300" loading="lazy" alt="La ventana de AwayLock con la lista de iPhones, los umbrales de distancia, los tiempos y las opciones." data-i18n-alt="altWindow">
+        <figcaption>
+          <strong data-i18n="windowT">En su ventana</strong>
+          <span data-i18n="windowP">Elegís tu iPhone y ajustás la distancia mirando el medidor. Mientras está abierta, aparece en el Dock como cualquier app.</span>
+          <span class="muted en-only" data-i18n="appSpanish">The app itself is in Spanish for now.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Instalar -->
+  <section class="section install" id="instalar" aria-labelledby="install-title">
+    <h2 id="install-title" class="h2 narrow" data-i18n="installTitle">Instalala en un minuto.</h2>
+    <div class="install-grid">
+      <ol class="install-steps">
+        <li><span data-i18n-html="st1">Descargá el <code>.zip</code> de la <a class="link" href="https://github.com/Lucavcolazo/AwayLock/releases/latest">última versión</a> y descomprimilo.</span></li>
+        <li><span data-i18n-html="st2">Mové <strong>AwayLock.app</strong> a <strong>Aplicaciones</strong>.</span></li>
+        <li><span data-i18n-html="st3">Abrila y dale permiso de <strong>Bluetooth</strong>.</span></li>
+      </ol>
+
+      <aside class="gatekeeper" aria-labelledby="gk-title">
+        <h3 id="gk-title" data-i18n="gkTitle">La primera vez, macOS la va a frenar.</h3>
+        <p data-i18n="gkBody">AwayLock no está firmada con una cuenta paga de desarrollador de Apple, así que macOS avisa que no puede verificarla. Es esperable y pasa una sola vez:</p>
+        <ol>
+          <li data-i18n="gk1">Intentá abrirla y cerrá el aviso. No la mandes a la papelera.</li>
+          <li data-i18n-html="gk2">Andá a <strong>Ajustes del Sistema → Privacidad y seguridad</strong>.</li>
+          <li data-i18n-html="gk3">Bajá hasta el mensaje sobre AwayLock y tocá <strong>Abrir igualmente</strong>.</li>
+        </ol>
+        <p class="muted" data-i18n="gkTerminal">O, desde la Terminal:</p>
+        <div class="code">
+          <code>xattr -dr com.apple.quarantine /Applications/AwayLock.app</code>
+          <button type="button" class="copy" data-copy="xattr -dr com.apple.quarantine /Applications/AwayLock.app" data-i18n="copy">Copiar</button>
+        </div>
+      </aside>
+
+      <div class="reqs">
+        <h3 data-i18n="reqTitle">Qué necesitás</h3>
+        <ul>
+          <li data-i18n="req1">Una Mac con Bluetooth, con chip Apple o Intel.</li>
+          <li data-i18n="req2">macOS 13 o posterior. Por ahora está probada en macOS 26.</li>
+          <li data-i18n="req3">Un iPhone con la misma cuenta de Apple que la Mac.</li>
+          <li data-i18n="req4">Opcional: un Apple Watch con el desbloqueo de la Mac activado.</li>
+        </ul>
+        <h3 data-i18n="buildTitle">¿Preferís compilarla vos?</h3>
+        <div class="code code-block">
+          <code>git clone https://github.com/Lucavcolazo/AwayLock.git<br>cd AwayLock && ./install.sh</code>
+          <button type="button" class="copy" data-copy="git clone https://github.com/Lucavcolazo/AwayLock.git && cd AwayLock && ./install.sh" data-i18n="copy">Copiar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Preguntas -->
+  <section class="section faq" aria-labelledby="faq-title">
+    <h2 id="faq-title" class="h2 narrow" data-i18n="faqTitle">Preguntas frecuentes</h2>
+    <div class="faq-list">
+      <details>
+        <summary data-i18n="q1">¿Y si dejo el iPhone en el escritorio?</summary>
+        <p data-i18n="a1">Entonces la Mac no se bloquea, porque para AwayLock seguís ahí. Funciona cuando llevás el iPhone encima.</p>
+      </details>
+      <details>
+        <summary data-i18n="q2">¿Gasta batería?</summary>
+        <p data-i18n="a2">Usa Bluetooth de bajo consumo, el mismo tipo de conexión que el iPhone ya mantiene con el reloj o los AirPods. Si querés el mínimo posible, activá «Solo escuchar (sin conectarse)».</p>
+      </details>
+      <details>
+        <summary data-i18n="q3">No aparece mi iPhone en la lista</summary>
+        <p data-i18n="a3">La lista muestra solo dispositivos cuyo nombre incluye «iPhone». Si le cambiaste el nombre, tildá «Mostrar todos los dispositivos». El iPhone también tiene que estar en la misma cuenta de Apple que la Mac.</p>
+      </details>
+      <details>
+        <summary data-i18n="q4">¿En qué se diferencia de BLEUnlock?</summary>
+        <p data-i18n-html="a4"><a class="link" href="https://github.com/ts1/BLEUnlock">BLEUnlock</a> es un gran proyecto que además desbloquea la Mac escribiendo tu contraseña. AwayLock está escrita desde cero con otro enfoque: solo bloquea y deja el desbloqueo al Apple Watch, así nunca toca tu contraseña.</p>
+      </details>
+      <details>
+        <summary data-i18n="q5">Algo no anda, ¿dónde lo reporto?</summary>
+        <p data-i18n-html="a5">En los <a class="link" href="https://github.com/Lucavcolazo/AwayLock/issues/new/choose">issues del repo</a>. El formulario te pide el modelo de Mac, la versión de macOS y qué señal marca sentado, que es lo que hace falta para entender qué pasa.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Cierre -->
+  <section class="close" aria-labelledby="close-title">
+    <div class="close-mark" aria-hidden="true">
+      <span class="cm-ring"></span><span class="cm-ring"></span><span class="cm-ring"></span>
+      <img src="assets/icon-512.png" alt="" width="132" height="132">
+    </div>
+    <h2 id="close-title" class="close-title" data-i18n="closeTitle">Levantate tranquilo.</h2>
+    <p class="body" data-i18n="closeBody">AwayLock es gratis y de código abierto.</p>
+    <div class="cta-row center">
+      <a class="btn btn-primary desk-only" href="https://github.com/Lucavcolazo/AwayLock/releases/latest">
+        <svg class="i" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m0 0-4-4m4 4 4-4M4 16h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span data-i18n="download">Descargar para macOS</span>
+      </a>
+      <button class="btn btn-primary touch-only" type="button" data-copy-link><span data-i18n="copyLink">Copiar el link</span></button>
+      <a class="btn btn-ghost" href="https://github.com/Lucavcolazo/AwayLock" data-i18n="star">Dejale una estrella en GitHub</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p><span data-i18n="madeBy">Hecha por</span> <a class="link" href="https://github.com/Lucavcolazo">Luca Colazo</a> · <a class="link" href="https://github.com/Lucavcolazo/AwayLock/blob/main/LICENSE">MIT</a></p>
+  <button class="lang" type="button" data-lang-toggle aria-label="Switch to English">EN</button>
+</footer>
+
+<div class="toast-copy" role="status" aria-live="polite" data-copy-toast></div>
+</body>
+</html>

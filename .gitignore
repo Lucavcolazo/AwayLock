@@ -1,5 +1,13 @@
+# Compilación
 .build/
 build/
 dist/
+
+# Capturas de revisión que no van al README
 docs/extra-*.png
+
+# Configuración local de Claude Code (rutas de esta Mac)
+.claude/launch.json
+.claude/settings.local.json
+
 .DS_Store

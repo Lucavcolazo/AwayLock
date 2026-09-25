@@ -1,0 +1,527 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-25T16:39:32+00:00",
+  "title": "Design System: AwayLock",
+  "extensions": {
+    "colorMeta": {
+      "bg": {
+        "role": "neutral",
+        "displayName": "Night",
+        "canonical": "oklch(14.6% 0.030 289.0)",
+        "tonalRamp": [
+          "#0b0917",
+          "#242333",
+          "#414051",
+          "#605f72",
+          "#818094",
+          "#a4a2b7",
+          "#c8c6dc",
+          "#edecff"
+        ]
+      },
+      "bg-raise": {
+        "role": "neutral",
+        "displayName": "Raised Night",
+        "canonical": "oklch(18.6% 0.046 287.1)",
+        "tonalRamp": [
+          "#0a071d",
+          "#24213a",
+          "#403e59",
+          "#5f5e7a",
+          "#807f9d",
+          "#a3a1c1",
+          "#c6c5e6",
+          "#ececff"
+        ]
+      },
+      "bg-sunk": {
+        "role": "neutral",
+        "displayName": "Sunk Night",
+        "canonical": "oklch(13.0% 0.021 289.2)",
+        "tonalRamp": [
+          "#0b0a14",
+          "#25232f",
+          "#41404d",
+          "#615f6d",
+          "#82808f",
+          "#a4a3b2",
+          "#c8c7d6",
+          "#eeecfc"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(96.6% 0.017 293.1)",
+        "tonalRamp": [
+          "#0b0a12",
+          "#25242d",
+          "#42404b",
+          "#61606a",
+          "#82818c",
+          "#a5a3af",
+          "#c9c7d4",
+          "#efedf9"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink 2",
+        "canonical": "oklch(81.6% 0.053 292.4)",
+        "tonalRamp": [
+          "#0d061f",
+          "#26203d",
+          "#433d5c",
+          "#625c7d",
+          "#837da0",
+          "#a59fc4",
+          "#c9c3ea",
+          "#efebff"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Ink 3",
+        "canonical": "oklch(65.9% 0.067 291.6)",
+        "tonalRamp": [
+          "#0d0324",
+          "#261e42",
+          "#433b62",
+          "#625a84",
+          "#827ba8",
+          "#a59ecc",
+          "#c9c2f2",
+          "#eeebff"
+        ]
+      },
+      "ink-dim": {
+        "role": "neutral",
+        "displayName": "Ink Dim",
+        "canonical": "oklch(55.4% 0.065 291.8)",
+        "tonalRamp": [
+          "#0d0423",
+          "#261e42",
+          "#433b62",
+          "#625b83",
+          "#837ca7",
+          "#a59ecb",
+          "#c9c2f1",
+          "#eeeaff"
+        ]
+      },
+      "violet": {
+        "role": "primary",
+        "displayName": "Locked Violet",
+        "canonical": "oklch(62.3% 0.210 283.0)",
+        "tonalRamp": [
+          "#0b0033",
+          "#250072",
+          "#3e12ab",
+          "#5941d2",
+          "#7767f9",
+          "#9996ff",
+          "#c0c2ff",
+          "#ebecff"
+        ]
+      },
+      "violet-hi": {
+        "role": "primary",
+        "displayName": "Locked Violet, legible",
+        "canonical": "oklch(71.4% 0.157 286.7)",
+        "tonalRamp": [
+          "#0d0033",
+          "#27006b",
+          "#412a8f",
+          "#5e4db4",
+          "#7e70da",
+          "#9f93ff",
+          "#c4c1ff",
+          "#ecebff"
+        ]
+      },
+      "violet-deep": {
+        "role": "primary",
+        "displayName": "Locked Violet, deep",
+        "canonical": "oklch(38.7% 0.177 280.4)",
+        "tonalRamp": [
+          "#0a0035",
+          "#220076",
+          "#38279b",
+          "#534cc1",
+          "#7270e8",
+          "#9497ff",
+          "#bdc3ff",
+          "#eaedff"
+        ]
+      },
+      "green": {
+        "role": "signal",
+        "displayName": "Presence Green",
+        "canonical": "oklch(80.0% 0.182 151.7)",
+        "tonalRamp": [
+          "#001200",
+          "#00300c",
+          "#00531e",
+          "#007732",
+          "#009d4d",
+          "#23c468",
+          "#58ea8b",
+          "#b8ffcb"
+        ]
+      },
+      "green-text": {
+        "role": "signal",
+        "displayName": "Presence Green, small text",
+        "canonical": "oklch(85.2% 0.140 153.4)",
+        "tonalRamp": [
+          "#001201",
+          "#003010",
+          "#005223",
+          "#007738",
+          "#279a59",
+          "#53be7b",
+          "#7ae49e",
+          "#b2ffcb"
+        ]
+      },
+      "red": {
+        "role": "signal",
+        "displayName": "Threshold Red",
+        "canonical": "oklch(69.4% 0.198 18.3)",
+        "tonalRamp": [
+          "#210002",
+          "#4f000d",
+          "#82001e",
+          "#b60033",
+          "#df3d53",
+          "#ff6f79",
+          "#ffadaf",
+          "#ffe5e5"
+        ]
+      },
+      "red-text": {
+        "role": "signal",
+        "displayName": "Threshold Red, small text",
+        "canonical": "oklch(76.6% 0.140 14.9)",
+        "tonalRamp": [
+          "#200003",
+          "#4e0012",
+          "#7b0e29",
+          "#a13747",
+          "#c85a67",
+          "#ef7d89",
+          "#ffaeb4",
+          "#ffe4e6"
+        ]
+      },
+      "orange": {
+        "role": "signal",
+        "displayName": "Leaving Orange",
+        "canonical": "oklch(79.1% 0.149 60.4)",
+        "tonalRamp": [
+          "#1a0500",
+          "#3f1900",
+          "#663300",
+          "#964a00",
+          "#c06900",
+          "#e78c32",
+          "#ffb46a",
+          "#ffe6c8"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "rgba(190, 180, 255, 0.1)",
+        "note": "Translucent violet overlay; no tonal ramp."
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Hairline Strong",
+        "canonical": "rgba(190, 180, 255, 0.18)",
+        "note": "Translucent violet overlay; no tonal ramp."
+      },
+      "grid": {
+        "role": "neutral",
+        "displayName": "Grid",
+        "canonical": "rgba(155, 140, 255, 0.055)",
+        "note": "Translucent violet overlay; no tonal ramp."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Kinetic hero headline and closing title only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section h2s, balanced, about 18ch."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Walk captions colored by phase; CPU statement."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Hero sentence, max 44ch."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Section copy in ink-2, 58-60ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Buttons, chips, tags."
+      },
+      "reading-lg": {
+        "displayName": "Reading, large",
+        "purpose": "Big distance and signal readouts in the walk."
+      },
+      "reading": {
+        "displayName": "Reading",
+        "purpose": "dBm readouts, threshold labels, ruler ticks, code."
+      }
+    },
+    "shadows": [
+      {
+        "name": "deep-drop",
+        "value": "0 40px 80px -40px rgba(0, 0, 0, 0.9)",
+        "purpose": "Screenshots, drawn Mac screen, login card."
+      },
+      {
+        "name": "float",
+        "value": "0 18px 40px -14px rgba(0, 0, 0, 0.8)",
+        "purpose": "Small floating UI inside the drawn Mac (panel, toast)."
+      },
+      {
+        "name": "cta-glow",
+        "value": "0 10px 30px -10px rgba(123, 108, 255, 0.7), inset 0 -2px 0 rgba(58, 42, 158, 0.18)",
+        "purpose": "Primary button at rest."
+      },
+      {
+        "name": "cta-glow-hover",
+        "value": "0 14px 38px -10px rgba(123, 108, 255, 0.9), inset 0 -2px 0 rgba(58, 42, 158, 0.18)",
+        "purpose": "Primary button hover."
+      },
+      {
+        "name": "field-glow",
+        "value": "0 50px 100px -50px rgba(58, 42, 158, 0.9)",
+        "purpose": "Privacy slab."
+      },
+      {
+        "name": "signal-halo",
+        "value": "0 0 18px rgba(74, 222, 128, 0.6)",
+        "purpose": "Green phone dot only."
+      },
+      {
+        "name": "frost-nav",
+        "value": "backdrop-filter: saturate(140%) blur(14px)",
+        "purpose": "Sticky nav; macOS-style frosting also on drawn menu bar (10px) and lock screen (22px)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Entrances, presses, chevrons, toasts."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "Clip-path wipes and the logic-chart draw."
+      },
+      {
+        "name": "press",
+        "value": "transform: scale(0.97) 160ms ease-out (0.96 on small controls)",
+        "purpose": "Every button and pill control."
+      },
+      {
+        "name": "hover-color",
+        "value": "150-180ms ease",
+        "purpose": "Color, background and border hovers."
+      },
+      {
+        "name": "blur-rise",
+        "value": "opacity 0, blur(6-12px), translateY(10-14px) -> rest, 380-900ms",
+        "purpose": "Entrances: headline lines, captions, login card."
+      },
+      {
+        "name": "chart-draw",
+        "value": "clip-path inset(0 100% 0 0) -> inset(0), 2600ms ease-in-out",
+        "purpose": "Logic chart; tags follow at 1400/1900/2500ms."
+      },
+      {
+        "name": "shot-wipe",
+        "value": "clip-path inset(0 0 100% 0 round 18px) -> inset(0), 1100ms ease-in-out",
+        "purpose": "Screenshot reveals."
+      },
+      {
+        "name": "radar-pulse",
+        "value": "scale 1 -> 4.6, opacity 0.7 -> 0, 3.2s ease-out infinite",
+        "purpose": "Hero radar pulse; closing rings 3.6s staggered 1.2s."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "@media (prefers-reduced-motion: reduce)",
+        "purpose": "All entrances render at final state, loops stop and hide, walk unpins and is driven by step buttons, wipes removed, radar static, smooth scroll off."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "560px"
+      },
+      {
+        "name": "chart-stack",
+        "value": "700px"
+      },
+      {
+        "name": "single-column",
+        "value": "960px"
+      },
+      {
+        "name": "facts-6col",
+        "value": "1100px"
+      },
+      {
+        "name": "container",
+        "value": "1240px"
+      },
+      {
+        "name": "touch",
+        "value": "(hover: none) and (pointer: coarse)"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The brightest object in a scene: ink pill with violet glow. One per scene (download).",
+      "html": "<button class=\"ds-btn-primary\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path d=\"M10 3v10m0 0-4-4m4 4 4-4M4 16h12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg><span>Descargar para macOS</span></button>",
+      "css": ".ds-btn-primary { display:inline-flex; align-items:center; gap:10px; height:52px; padding:0 24px; border-radius:999px; border:1px solid transparent; background:var(--ink, #f4f2ff); color:#120e2e; font-family: \"Archivo\", ui-sans-serif, system-ui, sans-serif; font-weight:600; font-size:16px; cursor:pointer; box-shadow:0 10px 30px -10px rgba(123,108,255,0.7), inset 0 -2px 0 rgba(58,42,158,0.18); transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), background-color 180ms ease, box-shadow 220ms ease; } .ds-btn-primary:hover { background:#fff; box-shadow:0 14px 38px -10px rgba(123,108,255,0.9), inset 0 -2px 0 rgba(58,42,158,0.18); } .ds-btn-primary:active { transform:scale(0.97); } .ds-btn-primary:focus-visible { outline: 2px solid var(--violet-hi, #9d91ff); outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action beside the primary (view the code, star on GitHub).",
+      "html": "<button class=\"ds-btn-ghost\">Ver el código</button>",
+      "css": ".ds-btn-ghost { display:inline-flex; align-items:center; gap:10px; height:52px; padding:0 24px; border-radius:999px; border:1px solid var(--line-strong, rgba(190,180,255,0.18)); background:rgba(255,255,255,0.03); color:var(--ink, #f4f2ff); font-family: \"Archivo\", ui-sans-serif, system-ui, sans-serif; font-weight:600; font-size:16px; cursor:pointer; transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), background-color 180ms ease, border-color 180ms ease; } .ds-btn-ghost:hover { background:rgba(255,255,255,0.07); border-color:rgba(190,180,255,0.3); } .ds-btn-ghost:active { transform:scale(0.97); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--violet-hi, #9d91ff); outline-offset: 3px; }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Sticky frosted night bar: brand, section links, mono language pill, small ghost GitHub button.",
+      "html": "<header class=\"ds-nav\"><span class=\"ds-nav-brand\">AwayLock</span><nav class=\"ds-nav-links\"><a href=\"#\">Cómo funciona</a><a href=\"#\">Privacidad</a><a href=\"#\">Instalar</a></nav><div class=\"ds-nav-actions\"><button class=\"ds-nav-lang\">EN</button><a class=\"ds-nav-gh\" href=\"#\">GitHub</a></div></header>",
+      "css": ".ds-nav { display:flex; align-items:center; gap:24px; padding:14px 24px; background:linear-gradient(to bottom, rgba(10,8,22,0.92), rgba(10,8,22,0.7)); backdrop-filter:saturate(140%) blur(14px); -webkit-backdrop-filter:saturate(140%) blur(14px); border-bottom:1px solid var(--line, rgba(190,180,255,0.1)); color:var(--ink, #f4f2ff); font-family: \"Archivo\", ui-sans-serif, system-ui, sans-serif; } .ds-nav-brand { font-weight:700; font-size:17px; font-variation-settings:'wdth' 110; } .ds-nav-links { display:flex; gap:26px; margin-left:28px; font-size:15px; } .ds-nav-links a { color:var(--ink-2, #c3bde3); text-decoration:none; transition:color 150ms ease; } .ds-nav-links a:hover { color:var(--ink, #f4f2ff); } .ds-nav-actions { margin-left:auto; display:flex; gap:10px; align-items:center; } .ds-nav-lang { height:34px; min-width:42px; padding:0 10px; border-radius:999px; border:1px solid var(--line-strong, rgba(190,180,255,0.18)); background:transparent; color:var(--ink, #f4f2ff); font-family: \"Martian Mono\", ui-monospace, \"SF Mono\", Menlo, monospace; font-size:12px; cursor:pointer; transition: background-color 150ms ease, transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-nav-lang:hover { background:rgba(255,255,255,0.06); } .ds-nav-lang:active { transform:scale(0.96); } .ds-nav-gh { display:inline-flex; align-items:center; height:36px; padding:0 14px; border-radius:999px; border:1px solid var(--line-strong, rgba(190,180,255,0.18)); background:rgba(255,255,255,0.03); color:var(--ink, #f4f2ff); font-size:14px; font-weight:600; text-decoration:none; } .ds-nav-gh:hover { background:rgba(255,255,255,0.07); } .ds-nav a:focus-visible, .ds-nav button:focus-visible { outline: 2px solid var(--violet-hi, #9d91ff); outline-offset: 3px; }"
+    },
+    {
+      "name": "Privacy Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Plain factual claims on the violet privacy slab.",
+      "html": "<div class=\"ds-chip-field\"><span class=\"ds-chip\">Sin conexión a internet</span><span class=\"ds-chip\">Código abierto · MIT</span></div>",
+      "css": ".ds-chip-field { display:flex; flex-wrap:wrap; gap:10px; padding:24px; border-radius:28px; background:radial-gradient(90% 120% at 100% 0%, rgba(157,145,255,0.35), transparent 60%), linear-gradient(150deg, #4a37c9, #2a1d86 55%, #1a1256); } .ds-chip { padding:10px 16px; border-radius:999px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.18); color:var(--ink, #f4f2ff); font-family: \"Archivo\", ui-sans-serif, system-ui, sans-serif; font-size:15px; font-weight:600; }"
+    },
+    {
+      "name": "Segmented Step Control",
+      "kind": "custom",
+      "refersTo": "segmented-step",
+      "description": "Jumps the walk demo between phases; the primary control under reduced motion.",
+      "html": "<div class=\"ds-steps\" role=\"group\"><button aria-current=\"step\">Cerca</button><button>Te alejás</button><button>Bloqueada</button><button>Volvés</button></div>",
+      "css": ".ds-steps { display:inline-flex; gap:4px; padding:4px; border-radius:999px; background:rgba(255,255,255,0.03); border:1px solid var(--line, rgba(190,180,255,0.1)); } .ds-steps button { height:34px; padding:0 14px; border:0; border-radius:999px; background:transparent; color:var(--ink-3, #928bb8); font-family: \"Archivo\", ui-sans-serif, system-ui, sans-serif; font-size:14px; cursor:pointer; transition: background-color 180ms ease, color 180ms ease, transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-steps button:hover { color:var(--ink, #f4f2ff); } .ds-steps button:active { transform:scale(0.96); } .ds-steps button[aria-current='step'] { background:rgba(157,145,255,0.16); color:var(--ink, #f4f2ff); } .ds-steps button:focus-visible { outline: 2px solid var(--violet-hi, #9d91ff); outline-offset: 3px; }"
+    },
+    {
+      "name": "Radar Readout",
+      "kind": "custom",
+      "refersTo": "readout",
+      "description": "Pill pairing the state word (colored by signal) with a mono dBm reading.",
+      "html": "<div class=\"ds-readout\"><span class=\"ds-readout-state\">Cerca</span><span class=\"ds-readout-value\">−50 dBm</span></div>",
+      "css": ".ds-readout { display:inline-flex; align-items:baseline; gap:14px; padding:10px 18px; border-radius:999px; background:rgba(18,15,38,0.85); border:1px solid var(--line-strong, rgba(190,180,255,0.18)); box-shadow:0 16px 40px -18px rgba(0,0,0,0.8); } .ds-readout-state { font-family: \"Archivo\", ui-sans-serif, system-ui, sans-serif; font-weight:700; font-size:16px; color:var(--green, #4ade80); } .ds-readout-value { font-family: \"Martian Mono\", ui-monospace, \"SF Mono\", Menlo, monospace; font-size:13px; letter-spacing:-0.01em; color:var(--ink-2, #c3bde3); font-variant-numeric:tabular-nums; }"
+    },
+    {
+      "name": "Code Well",
+      "kind": "input",
+      "refersTo": "code-well",
+      "description": "Sunk well for terminal commands with a copy button; scrolls horizontally inside itself.",
+      "html": "<div class=\"ds-code\"><code>xattr -dr com.apple.quarantine /Applications/AwayLock.app</code><button class=\"ds-code-copy\">Copiar</button></div>",
+      "css": ".ds-code { display:flex; align-items:center; gap:12px; padding:12px 12px 12px 16px; border-radius:12px; background:var(--bg-sunk, #07060f); border:1px solid var(--line-strong, rgba(190,180,255,0.18)); } .ds-code code { flex:1; min-width:0; overflow-x:auto; white-space:nowrap; color:var(--ink, #f4f2ff); font-family: \"Martian Mono\", ui-monospace, \"SF Mono\", Menlo, monospace; font-size:13px; line-height:1.7; } .ds-code-copy { flex:none; height:32px; padding:0 12px; border-radius:8px; border:1px solid var(--line-strong, rgba(190,180,255,0.18)); background:rgba(255,255,255,0.05); color:var(--ink, #f4f2ff); font-family: \"Archivo\", ui-sans-serif, system-ui, sans-serif; font-size:13px; cursor:pointer; transition: background-color 150ms ease, transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-code-copy:hover { background:rgba(255,255,255,0.1); } .ds-code-copy:active { transform:scale(0.96); } .ds-code-copy:focus-visible { outline: 2px solid var(--violet-hi, #9d91ff); outline-offset: 3px; }"
+    },
+    {
+      "name": "Chart Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Annotation pill on the logic chart, text colored by the signal it describes.",
+      "html": "<div class=\"ds-tags\"><span class=\"ds-tag ds-tag-lock\">bloquea una vez</span><span class=\"ds-tag ds-tag-arm\">recién acá se vuelve a armar</span></div>",
+      "css": ".ds-tags { display:flex; flex-wrap:wrap; gap:8px; } .ds-tag { padding:6px 10px; border-radius:999px; background:rgba(18,15,38,0.92); border:1px solid var(--line-strong, rgba(190,180,255,0.18)); font-family: \"Archivo\", ui-sans-serif, system-ui, sans-serif; font-size:13px; font-weight:600; white-space:nowrap; } .ds-tag-lock { color:var(--violet-hi, #9d91ff); } .ds-tag-arm { color:var(--green-text, #7fe9a3); }"
+    },
+    {
+      "name": "Caution Callout",
+      "kind": "card",
+      "refersTo": "callout-caution",
+      "description": "Orange-tinted aside for the one expected stop (Gatekeeper on first launch).",
+      "html": "<aside class=\"ds-callout\"><h3>La primera vez, macOS la va a frenar.</h3><p>Es esperable y pasa una sola vez.</p></aside>",
+      "css": ".ds-callout { padding:28px; border-radius:20px; background:rgba(255,162,76,0.07); border:1px solid rgba(255,162,76,0.3); font-family: \"Archivo\", ui-sans-serif, system-ui, sans-serif; } .ds-callout h3 { margin:0 0 10px; font-size:22px; line-height:1.2; letter-spacing:-0.02em; color:#ffc48c; } .ds-callout p { margin:0; color:var(--ink-2, #c3bde3); font-size:16px; line-height:1.55; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Signal Is the Interface",
+    "overview": "AwayLock's landing is an instrument, not a brochure. The ground is a near-black violet night with a faint 56px measurement grid and one violet glow in the upper right; on it, the product explains itself by working: radar rings that are the real thresholds, a Mac that locks as you scroll away from it, a live dBm trace. Heavy, wide Archivo carries the voice; Martian Mono appears where a number is being read off a sensor. Density is low and cinematic, one idea per scene, with long vertical breathing room between scenes.\n\nColor in this world is not decoration. Four hues are reserved as signal states, and the violet that tints the whole world doubles as the \"locked\" state, so the brand color and the product's core outcome are the same thing. Everything else is a violet-tinted neutral.\n\nThe build rejects the category default of hero, feature-card grid, screenshot, CTA. Facts are a definition list with drawn glyphs, not cards; proof is an animated instrument, not a bullet list.",
+    "keyCharacteristics": [
+      "Dark-only violet night (`bg` #0a0816) with a 56px hairline grid and a single radial violet glow.",
+      "Signal colors with fixed meanings: green near/back, red lock threshold, orange leaving/waiting, violet locked.",
+      "Archivo variable, pushed wide (`wdth` 108 to 115) and heavy (750 to 850) for display; normal width for reading.",
+      "Martian Mono only for readings (dBm, meters, seconds, thresholds) and code.",
+      "Pills for every control and readout; instruments sit in sunk, hairline-bordered wells.",
+      "Motion demonstrates the product (scroll-scrubbed walk, radar loop, drawn charts) and collapses to static, fully readable states under reduced motion."
+    ],
+    "rules": [
+      {
+        "name": "The Four Signals Rule",
+        "body": "Green, red, orange and violet each mean exactly one state (near/back, lock threshold or refusal, leaving/caution, locked). Never use them as accent decoration, category color, or to \"add variety\". If a new element is green, it must mean the phone is close.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tinted Neutral Rule",
+        "body": "Every neutral, border and overlay carries the violet hue (borders are `rgba(190,180,255,…)`, not gray). Pure white appears only as the padlock, the primary-button hover, and white strokes on signal dots.",
+        "section": "colors"
+      },
+      {
+        "name": "The Measurement Voice Rule",
+        "body": "Martian Mono is reserved for values a sensor or the code produces: dBm, meters, seconds, threshold numbers, and code/terminal commands. Headlines, prose and ordinary buttons are always Archivo. Every mono number uses tabular figures.",
+        "section": "typography"
+      },
+      {
+        "name": "The Width Axis Rule",
+        "body": "Emphasis comes from width and weight together: the bigger the statement, the wider (`wdth` 108 → 112 → 115) and heavier (750 → 800 → 850), with tighter tracking (-0.025em → -0.04em). Body text never leaves `wdth` 100.",
+        "section": "typography"
+      },
+      {
+        "name": "The Night Glow Rule",
+        "body": "Colored shadow is violet or signal-green, never black-on-color or offset. Violet glows only under brand moments; green glows only under the phone.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the page on the violet night (`bg` #0a0816) with the 56px grid and a single violet glow; the landing is dark-only.",
+      "Do color a thing green, red, orange or violet only when it expresses that signal state (The Four Signals Rule).",
+      "Do set every sensor value and code string in Martian Mono with tabular figures, and everything else in Archivo (The Measurement Voice Rule).",
+      "Do widen and thicken Archivo as statements grow (`wdth` 108/112/115, weight 750/800/850) and leave body at `wdth` 100.",
+      "Do make every control a pill that scales to 0.97 on press over 160ms `ease-out`, with the 2px `violet-hi` focus ring.",
+      "Do caption any simulated instrument as illustrative, and use the real app screenshots for the real UI.",
+      "Do give every animation a static, fully readable reduced-motion state and gate reveal-hidden states behind the `js` class.",
+      "Do swap download CTAs for the copy-link note on coarse-pointer, no-hover devices."
+    ],
+    "donts": [
+      "Don't build a feature-card grid, a hero-screenshot-CTA stack, or icon-in-a-tile fact cards; explain by showing the signal and the Mac locking.",
+      "Don't use gray borders or neutral black overlays; tint them violet (`rgba(190, 180, 255, …)`, `rgba(18, 15, 38, …)`).",
+      "Don't use a signal color as brand accent, category color or gradient flourish on page surfaces; brand violet is the only atmospheric color (the drawn Mac's wallpaper is an illustration of macOS, not a page surface).",
+      "Don't set headlines or prose in Martian Mono, or measurements in Archivo.",
+      "Don't use hard or offset shadows; depth is tonal layers, hairlines and long soft negative-spread shadows.",
+      "Don't offer a download on touch devices, and don't invent stars, users, testimonials or benchmark numbers the project doesn't have."
+    ]
+  }
+}

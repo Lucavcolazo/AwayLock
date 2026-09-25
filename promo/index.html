@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920">
+  <title>AwayLock · promo 15 s</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wght@400;500&display=block">
+  <link rel="stylesheet" href="promo.css">
+  <script src="promo.js" defer></script>
+</head>
+<body>
+<!--
+  Video promocional de 15 s a 1920×1080. Todo se dibuja desde renderAt(t), sin
+  animaciones de CSS, así scripts/render-promo.swift puede sacar cada cuadro exacto.
+  En el navegador se reproduce en loop; ?t=5.2 muestra un instante fijo.
+-->
+<div id="stage">
+  <div class="bg"><div class="grid"></div><div class="glow" id="glow"></div></div>
+
+  <header class="brand" id="brand">
+    <img src="../site/assets/icon-64.png" alt="" width="40" height="40">
+    <span>AwayLock</span>
+  </header>
+
+  <!-- 1. Texto palabra por palabra -->
+  <section class="scene" id="s1">
+    <h1 class="kin">
+      <span class="w" id="w1">Te levantás,</span>
+      <span class="w" id="w2">te vas,</span>
+      <span class="w" id="w3">tu Mac se bloquea.</span>
+    </h1>
+  </section>
+
+  <!-- 2. El radar -->
+  <section class="scene split" id="s2">
+    <div class="copy">
+      <h2 class="h">Mide la señal<br>de tu iPhone.</h2>
+      <p class="sub">Desde la barra de menú de tu Mac.</p>
+    </div>
+    <div class="radar" id="radar">
+      <svg viewBox="0 0 400 400">
+        <defs>
+          <radialGradient id="rg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#7B6CFF" stop-opacity=".6"/>
+            <stop offset="60%" stop-color="#3A2A9E" stop-opacity=".2"/>
+            <stop offset="100%" stop-color="#3A2A9E" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="200" cy="200" r="190" fill="url(#rg)"/>
+        <circle class="ring ring-far" cx="200" cy="200" r="178"/>
+        <circle class="ring ring-lock" cx="200" cy="200" r="128"/>
+        <circle class="ring ring-near" cx="200" cy="200" r="78"/>
+        <circle class="pulse" id="pulse" cx="200" cy="200" r="40"/>
+        <g transform="translate(200 206)">
+          <path id="shackle" d="M-15 -6 V-19 a15 15 0 0 1 30 0 V-6" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+          <rect x="-24" y="-8" width="48" height="38" rx="9" fill="#fff"/>
+          <circle cx="0" cy="9" r="4.5" fill="#3A2A9E"/>
+        </g>
+        <circle id="dot" r="15" fill="#4ADE80" stroke="#fff" stroke-width="4"/>
+      </svg>
+      <div class="read" id="read"><span id="readState">Cerca</span><span class="mono" id="readValue">−50 dBm</span></div>
+    </div>
+  </section>
+
+  <!-- 3 y 4. La Mac: te alejás, se bloquea, volvés -->
+  <section class="scene split" id="s3">
+    <div class="copy">
+      <div class="caps">
+        <h2 class="h cap" id="capLeave" style="color:#ffa24c">Te alejás…</h2>
+        <h2 class="h cap" id="capLock" style="color:#9d91ff">Bloqueada.</h2>
+        <h2 class="h cap" id="capBack" style="color:#4ade80">Volvés.</h2>
+      </div>
+      <div class="ro">
+        <div><b class="mono" id="roD">0,5 m</b><small>distancia</small></div>
+        <div><b class="mono" id="roS">−48 dBm</b><small>señal</small></div>
+      </div>
+      <svg class="trace" viewBox="0 0 700 150" preserveAspectRatio="none">
+        <line class="th th-green" id="thG" x1="0" x2="700"/>
+        <line class="th th-red" id="thR" x1="0" x2="700"/>
+        <polyline id="traceLine" points=""/>
+        <circle id="traceHead" r="6"/>
+      </svg>
+    </div>
+    <div class="mac">
+      <div class="screen">
+        <div class="wall"></div>
+        <div class="menubar">
+          <b>Finder</b><span>Archivo</span><span>Edición</span><span>Ver</span><i></i>
+          <span class="mb-status"><svg viewBox="0 0 16 16"><rect x="4.5" y="1.5" width="7" height="13" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M7 12.5h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+          <span class="mono">14:32</span>
+        </div>
+        <div class="panel" id="panel">
+          <div class="p-head">
+            <span class="badge" id="badge">
+              <svg viewBox="0 0 20 20" id="icNear"><circle cx="8" cy="6.5" r="3" fill="currentColor"/><path d="M2.5 16c.6-3.2 2.9-5 5.5-5s4.2 1.2 5 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m12.5 12.5 2 2 3.5-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 20 20" id="icWalk"><circle cx="11.5" cy="3.5" r="2" fill="currentColor"/><path d="M10.5 6.5 8 12l3 2 1 4M9 9l-3 1.5M11 8.5l2.5 2.5 2.5.5M8 12l-2.5 5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div>
+              <p class="p-title" id="pTitle">Cerca</p>
+              <p class="p-detail mono" id="pDetail">Tu iPhone · −48 dBm</p>
+            </div>
+          </div>
+          <div class="meter"><div class="bar"><i class="z1"></i><i class="z2"></i><i class="z3"></i></div><span class="knob" id="knob"></span></div>
+        </div>
+        <div class="lock" id="lock">
+          <p class="l-date">viernes, 25 de septiembre</p>
+          <p class="l-time">14:32</p>
+          <div class="l-user">
+            <span class="avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4" fill="currentColor"/><path d="M4.5 20c1-4 4-6 7.5-6s6.5 2 7.5 6" fill="currentColor"/></svg></span>
+            <span class="field">Ingresá la contraseña</span>
+          </div>
+        </div>
+        <div class="toast" id="toast">
+          <span class="t-icon"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="12" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 5l.6-3h4.8l.6 3M9 19l.6 3h4.8l.6-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+          <span><strong>Desbloqueada</strong><span>con tu Apple Watch</span></span>
+        </div>
+      </div>
+      <div class="base"></div>
+    </div>
+  </section>
+
+  <!-- 5. Nunca toca tu contraseña -->
+  <section class="scene" id="s5">
+    <h2 class="h big">
+      <span class="line" id="l1">Nunca toca</span>
+      <span class="line" id="l2">tu contraseña.</span>
+    </h2>
+    <ul class="chips">
+      <li class="chip" id="ch0">Sin internet</li>
+      <li class="chip" id="ch1">Sin cuentas</li>
+      <li class="chip" id="ch2">Sin contraseñas guardadas</li>
+      <li class="chip" id="ch3">Código abierto</li>
+    </ul>
+  </section>
+
+  <!-- 6. Cierre -->
+  <section class="scene" id="s6">
+    <div class="mark" id="mark">
+      <span class="cring" id="cr0"></span><span class="cring" id="cr1"></span><span class="cring" id="cr2"></span>
+      <img src="../site/assets/icon-512.png" alt="" width="220" height="220">
+    </div>
+    <h2 class="logo"><span id="logoText"></span><i class="caret" id="caret"></i></h2>
+    <p class="tag" id="tag">Gratis para macOS.</p>
+    <p class="url mono" id="url">lucavcolazo.github.io/AwayLock</p>
+  </section>
+</div>
+</body>
+</html>
